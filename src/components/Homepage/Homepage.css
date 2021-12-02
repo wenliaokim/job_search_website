@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Lora:wght@700&display=swap');
+
+
+/* .Background {
+    position: absolute;
+    margin: 0;
+    background-image: url('./image2.jpg');
+    opacity: 0.6;
+    width: 100vw;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+} */
+
+.title {
+    margin-top: 0;
+    padding-top: 150px;
+    text-align: center;
+    font-size: 3.5em;
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 30px;
+}
+
+.InputBox {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    gap:10px
+}
+
+.Input {
+    padding: 10px 10px;
+    width: 600px;
+    border-radius: 10px;
+    border: 0.5px solid black;
+    font-size: 1.2em;
+    /* opacity: 0.9; */
+    box-shadow: 0.3em 0.3em 0.3em rgba(206, 205, 205, 0.441);
+}
+
+.Enter {
+    padding: 10px 20px;
+    background-color: #9d8189;
+    color: white;
+    font-size: 1.5em;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0.3em 0.3em 0.3em rgba(206, 205, 205, 0.441);
+    transition: 0.15s;
+}
+
+.Enter:hover {
+    cursor: pointer;
+    transform: translateX(-0.1em) translateY(-0.1em);
+}

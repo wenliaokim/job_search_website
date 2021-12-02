@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;700&family=Poppins&display=swap');
+
+.signInBackground {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    margin-top: 90px;
+    text-align: center;
+    box-shadow: 0.5em  0.5em 0.5em rgba(126, 126, 126, 0.927),
+                -0.5em  0.5em 0.5em rgba(126, 126, 126, 0.927);
+    border-radius: 10px;
+    background-color: #200d13df;
+    padding: 20px 40px;
+}
+
+.logintitle {
+  margin: 20px 0 30px 0;
+  font-family: 'Merriweather Sans', sans-serif;
+  font-size: 1.8em;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.3em;
+  text-shadow: none;
+}
+
+.control {
+  position: relative;
+  margin: 10px 0;
+  width: 90%;
+}
+
+.control input {
+  background-color: rgba(0, 0, 0, 0);;
+  border: 0;
+  border-bottom: 2px #fff solid;
+  display: block;
+  width: 100%;
+  padding: 15px 0;
+  font-size: 15px;
+  color: white;
+  letter-spacing: 0.2em;
+}
+
+.control input:focus,
+.control input:valid {
+  outline: 0;
+  border-bottom-color: white;  
+}
+
+::-webkit-input-placeholder {
+    color: white;
+}
+
+.logininbutton {
+  cursor: pointer;
+  width: 40%;
+  background: #ddd2d2;
+  padding: 15px;
+  margin-top: 40px;
+  font-family: 'Merriweather Sans', sans-serif;
+  letter-spacing: 0.3em;
+  font-size: 16px;
+  border: 0;
+  border-radius: 5px;
+  color: black;
+}
+
+.logininbutton:focus {
+  outline: 0;
+}
+
+.logininbutton:hover {
+    transform: scale(1.1);
+}
+
+.logininbutton:active {
+  transform: scale(0.98);
+}
+
+.textForRegister {
+    margin-top: 45px;
+}
+
+.textForRegister, .register {
+    font-size: 1em;
+    color: white;
+    letter-spacing: 0.1em;
+}
+
+.register {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    text-decoration-line: underline;
+    transition: ease-in-out;
+    color: white;
+}
+
+.register:hover {
+    transform: scale(1.1);
+}

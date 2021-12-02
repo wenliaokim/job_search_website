@@ -1,0 +1,24 @@
+
+.Navibar {
+    /* position: absolute; */
+    background: none;
+}
+
+.Buttons {
+    text-align: right;
+    width: 100%;
+    /* background-color: rgb(221, 216, 216); */
+}
+
+.Buttons button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    margin: 10px 20px 5px 20px;
+    color: rgb(56, 55, 55);
+}
+
+.Buttons button:hover {
+    color: rgb(122, 50, 50);
+    text-decoration: underline;
+}
