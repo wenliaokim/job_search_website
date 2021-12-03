@@ -36,9 +36,9 @@ router.put('/searchJobs/JobDetail/:id', function(req, res) {
 
 // create job 
 router.post("/createJob", function(req, res) {
-    const {Title, CompanyName, Location, JobDescription, EmployerEmail, Website} = req.body;
+    const {title, companyName, location, jobDescription, employerEmail, website} = req.body;
     
-    if(!Title || !CompanyName || !Location || !JobDescription || !EmployerEmail) {
+    if(!title || !companyName || !location || !jobDescription || !employerEmail) {
         return res.status(422).send("Missing Information");
     }
 
