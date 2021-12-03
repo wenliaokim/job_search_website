@@ -12,16 +12,7 @@ function getAllJobs() {
 }
 
 function findJobByTitle(title) {
-    return JobModel.find({"Title": {$regex: "/" + title + ".*/"}})
-    .then((jobs) => {
-        if (jobs.length) {
-            return jobs;
-        } else {
-            const empty = [];
-            return empty;
-        }
-    })
-    .catch(err => {return err});
+    return JobModel.find({Title: new RegExp(title + ".*")})
 }
 
 function findJobById(id) {
