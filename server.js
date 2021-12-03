@@ -1,11 +1,23 @@
 const express = require('express');
-const cors = require('cors')
+const jobsearch = require('./routes/jobsearch.js');
+const users = require('./routes/users.js');
+const cors = require('cors');
 const path = require('path');
+const mongoose = require('mongoose');
+
+
+const mongoString = 'mongodb+srv://jingyi:q1w2e3r4t5@webdev.voyib.mongodb.net/jobsearch?retryWrites=true&w=majority';
+mongoose.connect(mongoString, { useNewUrlParser: true })
+const mongoDB = mongoose.connection;
+mongoDB.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/jobsearch', jobsearch);
+app.use('/users', users);
 
 
 app.use(express.static(path.join(__dirname, 'build')));
