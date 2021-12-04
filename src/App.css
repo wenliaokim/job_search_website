@@ -3,16 +3,29 @@ body {
     margin: 0;
 }
 
-
 .Background {
     position: absolute;
     margin: 0;
-    background-image: url('./Background.jpg');
-    opacity: 0.6;
+    background-image: url('./Background4.jpg');
+    opacity: 0.8;
     width: 100vw;
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-color: rgba(0, 0, 0, 0.735);
     z-index: -1;
+}
+
+
+.ResultBackground {
+    background-color: #515369;
+    background-color: #e7e8ee;
+    background: hsla(235, 10%, 47%, 1);
+    background: linear-gradient(0deg, hsla(235, 10%, 47%, 1) 0%, hsla(220, 45%, 91%, 1) 100%);
+    background: -moz-linear-gradient(0deg, hsla(235, 10%, 47%, 1) 0%, hsla(220, 45%, 91%, 1) 100%);
+    background: -webkit-linear-gradient(0deg, hsla(235, 10%, 47%, 1) 0%, hsla(220, 45%, 91%, 1) 100%);   
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#6B6D84", endColorstr="#DDE4F2", GradientType=1 );
+    width: 100vw;
+    min-height: 100vh;
 }

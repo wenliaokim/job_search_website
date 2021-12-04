@@ -1,0 +1,38 @@
+
+.JobDetail {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+    min-height: 60vh;
+}
+
+
+.JobDetail .card {
+    width: 90%;
+    background-color: rgb(213, 211, 203);
+}
+
+.JobDetail .card-header {
+    font-size: 1.5em;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.JobDetail h4 {
+    margin-bottom: 20px;
+}
+
+.JobDetail .CompanyAndLocation, .JobDetail .Employer {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.JobDetail .postdate {
+    margin-bottom: 25px;
+}
+
+.JobDetail .Employer {
+    margin-top: 25px;
+}

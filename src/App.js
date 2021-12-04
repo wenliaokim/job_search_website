@@ -4,6 +4,9 @@ import SignIn from "./components/SignIn/SignIn";
 import Navibar from './components/Navibar/Navibar';
 import './App.css';
 import Register from "./components/Register/Register";
+import SearchResultsPage from "./components/SearchResultsPage/SearchResultsPage";
+import JobDetailPage from "./components/JobDetailPage/JobDetailPage";
+import CreateJobPage from "./components/CreateJobPage/CreateJobPage";
 
 function App() {
     return (
@@ -14,6 +17,9 @@ function App() {
                     <Route exact path="/" component={() => <Homepage />} />
                     <Route exact path="/signin" component={() => <SignIn />} />
                     <Route exact path="/register" component={() => <Register />} />
+                    <Route exact path="/find" component={() => <SearchResultsPage />} />
+                    <Route exact path="/detail" component={() => <JobDetailPage />} />
+                    <Route exact path="/createjob" component={() => <CreateJobPage />} />
                     <Redirect to="/"/>
                 </Switch>
             </Router>

@@ -42,13 +42,13 @@
 
 .Enter {
     padding: 10px 20px;
-    background-color: #9d8189;
+    background-color: #383737;
     color: white;
     font-size: 1.5em;
     text-align: center;
     border: 1px solid black;
     border-radius: 10px;
-    box-shadow: 0.3em 0.3em 0.3em rgba(206, 205, 205, 0.441);
+    box-shadow: 0.2em 0.2em 0.2em rgba(206, 205, 205, 0.441);
     transition: 0.15s;
 }
 

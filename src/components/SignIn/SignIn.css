@@ -13,10 +13,10 @@
     overflow: hidden;
     margin-top: 90px;
     text-align: center;
-    box-shadow: 0.5em  0.5em 0.5em rgba(126, 126, 126, 0.927),
-                -0.5em  0.5em 0.5em rgba(126, 126, 126, 0.927);
     border-radius: 10px;
-    background-color: #200d13df;
+    box-shadow:  0.3em 0.3em 0.3em #32191eaf,
+                -0.2em 0.3em 0.3em #32191eaf;
+    background-color: #090405bf;
     padding: 20px 40px;
 }
 
@@ -70,6 +70,7 @@
   border: 0;
   border-radius: 5px;
   color: black;
+  transition: 0.3s;
 }
 
 .logininbutton:focus {
