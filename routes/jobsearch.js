@@ -49,18 +49,17 @@ router.put('/searchJobs/JobDetail/:id', Middleware.whoisLoggedIn, function(req, 
 })
 
 // create job 
-router.post("/createJob", Middleware.whoisLoggedIn, function(req, res) {
-    const username = req.session.username;
-    const {title, companyName, location, jobDescription, employerEmail, website} = req.body;
+router.post("/createJob", function(req, res) {
+    // const username = req.session.username;
+    const { title, companyName, location, jobDescription, employerEmail, website } = req.body;
     
     if(!title || !companyName || !location || !jobDescription || !employerEmail) {
         return res.status(422).send("Missing Information");
     }
 
-    return JobAccessor.insertJob({...req.body, username: username})
+    return JobAccessor.insertJob({...req.body})
             .then(jobResponse => res.status(200).send(jobResponse))
             .catch(error => res.status(400).send(error))
-
 })
 
 
