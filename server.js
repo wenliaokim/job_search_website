@@ -4,6 +4,8 @@ const users = require('./routes/users.js');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');    
 
 
 const mongoString = 'mongodb+srv://jingyi:q1w2e3r4t5@webdev.voyib.mongodb.net/jobsearch?retryWrites=true&w=majority';
@@ -12,6 +14,10 @@ const mongoDB = mongoose.connection;
 mongoDB.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
 const app = express();
+
+app.use(session({secret: "my demo secret",
+    store: MongoStore.create({ mongoUrl: mongoString }),
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

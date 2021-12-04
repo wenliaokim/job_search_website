@@ -12,7 +12,7 @@ function getAllUsers() {
 }
 
 function findUserByUsername(username) {
-    return UserModel.findOne({username}).exec();
+    return UserModel.findOne({username: username}).exec();
     // { username: username }
 }
 

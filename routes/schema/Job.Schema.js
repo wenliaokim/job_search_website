@@ -1,6 +1,7 @@
 const Schema = require('mongoose').Schema;
 
 exports.JobSchema = new Schema({
+    username: String,
     title: String,
     companyName: String,
     location: String,
