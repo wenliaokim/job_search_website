@@ -15,7 +15,7 @@ export default function CreateJobPage() {
         title: '', 
         company: '',
         location: '',
-        description: '',
+        description: JSON.stringify(content),
         email: '',
         website: '' 
     });
@@ -29,19 +29,7 @@ export default function CreateJobPage() {
     const onEmailChange = (event) => {setJobData({...jobData, email: event.target.value})};
     const onWebsiteChange = (event) => {setJobData({...jobData, website: event.target.value})};
 
-
-    let test;
-    let a;
-    let b;
-    let c;
     const onCreateJob = () => {
-        a = convertToRaw(editorState.getCurrentContent());
-        b = JSON.stringify(a)
-        c = JSON.parse(b);
-        console.log(editorState.getCurrentContent())
-        console.log(a);
-        console.log(b);
-        console.log(c);
         console.log(jobData);
     }
 
@@ -75,8 +63,8 @@ export default function CreateJobPage() {
                             <input type="text" placeholder='Company Website:'onChange={onWebsiteChange}/>
                         </div>
                     <button className="logininbutton" onClick={onCreateJob}>Submit</button>
-                    <div dangerouslySetInnerHTML={{ __html: draftToHtml(convertToRaw(editorState.getCurrentContent()))}} />
-                    {/* <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobData.description))}} /> */}
+                    {/* <div dangerouslySetInnerHTML={{ __html: draftToHtml(convertToRaw(editorState.getCurrentContent()))}} /> */}
+                    <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobData.description))}} />
                 </div>
             </div>
         </div>
