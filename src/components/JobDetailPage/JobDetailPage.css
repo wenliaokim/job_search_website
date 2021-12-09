@@ -2,23 +2,29 @@
 .JobDetail {
     display: flex;
     justify-content: center;
-    margin-top: 80px;
-    min-height: 60vh;
+    padding-top: 80px;
+    min-height: 50vh;
 }
 
-
 .JobDetail .card {
-    width: 90%;
-    background-color: rgb(213, 211, 203);
+    width: 80%;
+    background-color: rgba(251, 251, 251, 0.886);
+    box-shadow:  0.1em 0.2em 0.2em #f7f7f7b8,
+                -0.1em 0.2em 0.2em #f7f7f7b8;
 }
 
 .JobDetail .card-header {
     font-size: 1.5em;
     padding-top: 15px;
     padding-bottom: 15px;
+    background-color: #3a161dd1;
+    color: white;
+    box-shadow:  0.1em 0em 0.1em #3a161dd1,
+                -0.1em 0em 0.1em #3a161dd1;
 }
 
 .JobDetail h4 {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -36,3 +42,19 @@
 .JobDetail .Employer {
     margin-top: 25px;
 }
+
+
+.DescriptionTitle {
+    margin-top: 50px;
+}
+
+.DescriptionDisplay {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    padding-top: 10px;
+    position: relative;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    width: 90%;
+}
+

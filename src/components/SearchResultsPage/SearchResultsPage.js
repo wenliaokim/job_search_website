@@ -1,58 +1,35 @@
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from 'axios';
 import JobPage from "../JobPage/JobPage";
 import "./SearchResultsPage.css";
 
-const jobs = [
-    {
-        id: 1,
-        name: "software engineer",
-        title: "intern",
-        company: "amazon",
-        location: "Seattle WA"
-    },
-    {
-        id: 2,
-        name: "MBA",
-        title: "title1",
-        company: "google",
-        location: "Mountain View CA"
-    },
-    {
-        id: 3,
-        name: "marketing",
-        title: "title2",
-        company: "meta",
-        location: "Mountain View CA"
-    },
-    {
-        id: 4,
-        name: "marketing",
-        title: "title2",
-        company: "netflix",
-        location: "Seattle WA"
-    },
-    {
-        id: 5,
-        name: "marketing",
-        title: "title2",
-        company: "linkedin",
-        location: "Seattle WA"
-    }
-]
-
-
-
 export default function SearchResultsPage() {
+    let params = useParams();
+    let jobKey = params.key;
+    const [searchResults, setSearchResults] = useState([]);
+
+    useEffect(() => {
+        if (jobKey) {
+            axios.post('/jobsearch/searchJobs', {title: jobKey})
+            // .then(response => console.log(response.data))
+            .then(response => setSearchResults(response.data))
+            .catch(error => console.log(error));
+        }
+    }, []);
+
+    let jobDiv = [];
+    for (let i = 0; i < searchResults.length; i++) {
+        let newDiv = <JobPage key={i} job={searchResults[i]}/>
+        jobDiv.push(newDiv);
+    }
+
     return (
         <div className="ResultBackground">
             <h1 className="ResultTitle">Search result: </h1>
             <div className="JobList">
-                <JobPage job={jobs[0]}/>
-                <JobPage job={jobs[1]}/>
-                <JobPage job={jobs[2]}/>
-                <JobPage job={jobs[3]}/>
-                <JobPage job={jobs[4]}/>
+                {jobDiv}
             </div>
         </div>
-
     )
 }

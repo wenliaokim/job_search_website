@@ -13,11 +13,10 @@ router.post("/createUser", function(req, res) {
     return UserAccessor.insertUser(req.body)
             .then(userResponse => res.status(200).send(userResponse))
             .catch(error => res.status(400).send(error))
-
 })
 
 router.post("/authenticate", function(req, res) {
-    const { username, password } = request.body;
+    const { username, password } = req.body;
     if (!username || !password) {
         return res.status(422).send('Must include both password and username');
     }
@@ -30,12 +29,11 @@ router.post("/authenticate", function(req, res) {
             if (userResponse.password === password) {
 
                 req.session.username = username;
-
                 return res.status(200).send({username});
 
                 // return response.status(200).send("User is logged in!")
             } else {
-                return response.status(404).send("Password Wrong!");
+                return res.status(404).send("Password Wrong!");
             }
         })
 

@@ -17,8 +17,8 @@ function App() {
                     <Route exact path="/" component={() => <Homepage />} />
                     <Route exact path="/signin" component={() => <SignIn />} />
                     <Route exact path="/register" component={() => <Register />} />
-                    <Route exact path="/find" component={() => <SearchResultsPage />} />
-                    <Route exact path="/detail" component={() => <JobDetailPage />} />
+                    <Route exact path="/searchJobs/:key?" component={() => <SearchResultsPage />} />
+                    <Route exact path="/jobDetail/:id" component={() => <JobDetailPage />} />
                     <Route exact path="/createjob" component={() => <CreateJobPage />} />
                     <Redirect to="/"/>
                 </Switch>

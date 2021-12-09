@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
-// import htmlToDraft from 'html-to-draftjs';
-import { convertToHTML } from 'draft-convert';
-import {stateToHTML} from 'draft-js-export-html';
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./CreateJobPage.css";
 
 const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
@@ -21,12 +17,16 @@ export default function CreateJobPage() {
         website: '' 
     });
     const [editorState, seteditorState] = useState(() => EditorState.createEmpty());
-    // const [contentState, setContentState] = useState(convertFromRaw(content));
 
     const onTitleChange = (event) => {setJobData({...jobData, title: event.target.value})};
     const onCompanyChange = (event) => {setJobData({...jobData, companyName: event.target.value})};
     const onLocationChange = (event) => {setJobData({...jobData, location: event.target.value})};
-    const onDescriptionChange = () => {setJobData({...jobData, jobDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent()))})};
+    const onDescriptionChange = () => {
+        setJobData(
+            {...jobData, 
+                jobDescription: JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+            })
+    };
     const onEmailChange = (event) => {setJobData({...jobData, employerEmail: event.target.value})};
     const onWebsiteChange = (event) => {setJobData({...jobData, website: event.target.value})};
 
@@ -44,6 +44,7 @@ export default function CreateJobPage() {
             .then(response => console.log(response))
             .catch(error => console.log(error));
         }
+        // console.log(jobData.jobDescription);
     }
 
     return (
@@ -66,7 +67,6 @@ export default function CreateJobPage() {
                                     wrapperClassName="demo-wrapper"
                                     editorClassName="demo-editor"
                                     onEditorStateChange={seteditorState}
-                                    // onContentStateChange={setContentState}
                                     onChange={() => onDescriptionChange()}
                                 />
                             </div>
@@ -76,7 +76,7 @@ export default function CreateJobPage() {
                             <input type="text" placeholder='Company Website:'onChange={onWebsiteChange}/>
                         </div>
                     <button className="logininbutton" onClick={onCreateJob}>Submit</button>
-                    {/* <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobData.description))}} /> */}
+                    {/* <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobData.jobDescription))}} /> */}
                 </div>
             </div>
         </div>
