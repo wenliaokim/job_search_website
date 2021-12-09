@@ -28,6 +28,11 @@
     margin-bottom: 20px;
 }
 
+
+.JobDetail .updateButton {
+    margin-right: 20px;
+}
+
 .JobDetail .CompanyAndLocation, .JobDetail .Employer {
     display: flex;
     gap: 20px;

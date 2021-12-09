@@ -44,7 +44,7 @@ router.post("/login", function(req, res) {
         })
 })
 
-router.get("/logout", Middleware.whoisLoggedIn, function(req, res) {
+router.get("/logout", function(req, res) {
     req.session.username = null;
     return res.status(200).send("Successfully logged out");
 })

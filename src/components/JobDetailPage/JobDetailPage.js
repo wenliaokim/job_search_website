@@ -55,6 +55,10 @@ export default function JobDetailPage() {
                         {jobDetail.website ? <span class="card-title"><AiOutlineGlobal /> {jobDetail.website}</span> :<></>}
                     </div>
                 </div>
+                <div class="card-footer">
+                    <button class="btn btn-secondary updateButton">Edit</button>
+                    <button class="btn btn-secondary ">Delete</button>
+                 </div>
             </div>
         </div>
         </div>

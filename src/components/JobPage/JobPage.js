@@ -10,7 +10,7 @@ export default function JobPage({ job }) {
     return (
         <div className="JobPage">
             <div className="card text-center">
-                <div className="card-header test">{_id}</div>
+                
                 <div className="card-body">
                     <h5 className="card-title JobName">{title}</h5>
                     {/* <div class="card-text"><FaAddressCard /> {title}</div> */}

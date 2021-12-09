@@ -1,4 +1,4 @@
-import { Link, Redirect,  } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // import { useNavigate } from "react-router";
 import { useState } from 'react';
 import axios from 'axios';
@@ -14,11 +14,14 @@ export default function SignIn() {
     const onPasswordChange = (e) => {setUserInput({...userInput, password: e.target.value})};
 
     // const navigate = useNavigate();
+    const history = useHistory();
     const onSubmit = () => {
         axios.post('/users/login', userInput)
         .then(response => {
             console.log(response.data);
             Cookies.set("username", response.data.username);
+            history.push('/');
+            setTimeout(window.location.reload.bind(window.location), 250);
         })
         // .then (() => navigate('/'))
         .catch(error => console.log(error));
