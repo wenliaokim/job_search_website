@@ -1,6 +1,7 @@
 const express = require('express');
 const jobsearch = require('./routes/jobsearch.js');
 const users = require('./routes/users.js');
+const favorites = require('./routes/favorites.js');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/jobsearch', jobsearch);
 app.use('/users', users);
+app.use('/favorites', favorites);
 
 
 app.use(express.static(path.join(__dirname, 'build')));

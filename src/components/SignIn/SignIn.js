@@ -15,7 +15,7 @@ export default function SignIn() {
 
     // const navigate = useNavigate();
     const onSubmit = () => {
-        axios.post('/users/authenticate', userInput)
+        axios.post('/users/login', userInput)
         .then(response => {
             console.log(response.data);
             Cookies.set("username", response.data.username);

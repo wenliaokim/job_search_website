@@ -27,7 +27,10 @@ export default function JobDetailPage() {
     useEffect(() => {
         if (jobId) {
             axios.get('/jobsearch/searchJobs/JobDetail/' + jobId)
-            .then(response => setJobDetail(response.data))
+            .then(response => {
+                setJobDetail(response.data.jobResponse)
+                console.log(response.data)
+            })
             .catch(error => console.log(error));
         }
     }, []);
