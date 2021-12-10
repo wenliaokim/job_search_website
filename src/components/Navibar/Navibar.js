@@ -17,6 +17,7 @@ export default function Navibar() {
             console.log(response.data);
             document.cookie = "username" +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             setUserName(Cookies.get("username"));
+            setTimeout(window.location.reload.bind(window.location), 250);
         })
         .catch(error => console.log(error));
     }

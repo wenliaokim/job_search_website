@@ -12,7 +12,7 @@ function getAllJobs() {
 }
 
 function findJobByTitle(title) {
-    return JobModel.find({title: new RegExp(title + ".*")})
+    return JobModel.find({title:{'$regex' : title + '.*', '$options' : 'i'}})
 }
 
 function findJobById(id) {
@@ -23,6 +23,10 @@ function findJobByIdAndUpdate(id, job){
     return JobModel.findByIdAndUpdate(id, {...job});
 }
 
+function findJobByIdAndDelete(id) {
+    return JobModel.findByIdAndRemove(id);
+}
+
 // Make sure to export a function after you create it!
 module.exports = {
     insertJob,
@@ -30,4 +34,5 @@ module.exports = {
     findJobByTitle,
     findJobById,
     findJobByIdAndUpdate,
+    findJobByIdAndDelete
 };

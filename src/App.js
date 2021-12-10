@@ -7,6 +7,7 @@ import Register from "./components/Register/Register";
 import SearchResultsPage from "./components/SearchResultsPage/SearchResultsPage";
 import JobDetailPage from "./components/JobDetailPage/JobDetailPage";
 import CreateJobPage from "./components/CreateJobPage/CreateJobPage";
+import EditJobPage from "./components/EditJobPage/EditJobPage";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route exact path="/searchJobs/:key?" component={() => <SearchResultsPage />} />
                     <Route exact path="/jobDetail/:id" component={() => <JobDetailPage />} />
                     <Route exact path="/createjob" component={() => <CreateJobPage />} />
+                    <Route exact path="/editjob/:id" component={() => <EditJobPage />} />
                     <Redirect to="/"/>
                 </Switch>
             </Router>

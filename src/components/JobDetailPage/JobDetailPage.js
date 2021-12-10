@@ -1,20 +1,25 @@
 import { IoBusinessSharp } from "react-icons/io5";
 import { GoLocation } from "react-icons/go";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
 import { AiOutlineMail, AiOutlineGlobal } from "react-icons/ai";
 import { BsCalendar2Date } from "react-icons/bs";
 import "./JobDetailPage.css";
+import * as Cookies from "js-cookie";
 
 export default function JobDetailPage() {
     const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
     let params = useParams();
     let jobId = params.id;
+    let username = Cookies.get("username");
+    const history = useHistory();
+
     const [jobDetail, setJobDetail] = useState({
         _id: '',
+        username: '',
         title: '',
         companyName: '',
         location: '',
@@ -30,10 +35,19 @@ export default function JobDetailPage() {
             .then(response => {
                 setJobDetail(response.data.jobResponse)
                 console.log(response.data)
+                console.log(jobDetail.username);
             })
             .catch(error => console.log(error));
         }
     }, []);
+
+    const deleteJob = () => {
+        axios.delete('/jobsearch/searchJobs/JobDetail/' + jobId)
+            .then(response => {
+                history.push('/');
+            })
+            .catch(error => console.log(error));
+    }
     
     return (
         <div className="ResultBackground">
@@ -55,10 +69,13 @@ export default function JobDetailPage() {
                         {jobDetail.website ? <span class="card-title"><AiOutlineGlobal /> {jobDetail.website}</span> :<></>}
                     </div>
                 </div>
-                <div class="card-footer">
-                    <button class="btn btn-secondary updateButton">Edit</button>
-                    <button class="btn btn-secondary ">Delete</button>
-                 </div>
+                {username === jobDetail.username && username ?
+                    <div class="card-footer">
+                         <Link to={`/editjob/${jobDetail._id}`}><button class="btn btn-secondary updateButton">Edit</button> </Link>
+                        <button class="btn btn-secondary" onClick={() => deleteJob()}>Delete</button>
+                    </div>
+                    : <></>
+                }
             </div>
         </div>
         </div>

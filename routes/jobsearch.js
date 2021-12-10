@@ -42,6 +42,13 @@ router.put('/searchJobs/JobDetail/:id', Middleware.whoisLoggedIn, function(req, 
         .catch(error => res.status(400).send(error))
 })
 
+router.delete('/searchJobs/JobDetail/:id', function(req, res) {
+    const id = req.params.id;
+    return JobAccessor.findJobByIdAndDelete(id)
+        .then(jobResponse => res.status(200).send("Successfully deleted"))
+        .catch(error => res.status(400).send(error))
+})
+
 // create job 
 router.post("/createJob", function(req, res) {
     // const username = req.session.username;

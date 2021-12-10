@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "./CreateJobPage.css";
+import "./EditJobPage.css";
+import { useParams, useHistory } from "react-router-dom";
 import * as Cookies from "js-cookie";
 
-const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
-export default function CreateJobPage() {
+export default function EditJobPage() {
+    const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+
+    let params = useParams();
+    let jobId = params.id;
+    const history = useHistory();
+
     const [jobData, setJobData] = useState({
         username: '',
         title: '', 
@@ -18,6 +23,18 @@ export default function CreateJobPage() {
         employerEmail: '',
         website: '' 
     });
+
+    useEffect(() => {
+        if (jobId) {
+            axios.get('/jobsearch/searchJobs/JobDetail/' + jobId)
+            .then(response => {
+                setJobData(response.data.jobResponse);
+            })
+            .catch(error => console.log(error));
+        }
+    }, []);
+
+
     const [editorState, seteditorState] = useState(() => EditorState.createEmpty());
 
     const onTitleChange = (event) => {setJobData({...jobData, title: event.target.value})};
@@ -55,11 +72,11 @@ export default function CreateJobPage() {
                 <div className="CreateJobPage">
                         <h1 className='CreateJobTitle'>Create Job</h1>
                         <div className="control">
-                            <input type="text" placeholder='Job Title:' onChange={onTitleChange}/>
+                            <input type="text" placeholder='Job Title:' value={jobData.title} onChange={onTitleChange}/>
                         </div>
                         <div className="control">
-                            <input type="text" placeholder='Company:' onChange={onCompanyChange}/>
-                            <input type="text" placeholder='Location:' onChange={onLocationChange}/>
+                            <input type="text" placeholder='Company:' value={jobData.companyName} onChange={onCompanyChange}/>
+                            <input type="text" placeholder='Location:' value={jobData.location} onChange={onLocationChange}/>
                         </div>
                         <div className="control control-2">
                             <div className="description">Description:</div>
@@ -74,8 +91,8 @@ export default function CreateJobPage() {
                             </div>
                         </div>
                         <div className="control">
-                            <input type="email" placeholder='Contact Email:' onChange={onEmailChange}/>
-                            <input type="text" placeholder='Company Website:'onChange={onWebsiteChange}/>
+                            <input type="email" placeholder='Contact Email:' value={jobData.employerEmail} onChange={onEmailChange}/>
+                            <input type="text" placeholder='Company Website:' value={jobData.website} onChange={onWebsiteChange}/>
                         </div>
                     <button className="logininbutton" onClick={onCreateJob}>Submit</button>
                     {/* <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobData.jobDescription))}} /> */}
