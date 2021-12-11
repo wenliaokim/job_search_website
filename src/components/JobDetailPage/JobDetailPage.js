@@ -29,7 +29,7 @@ export default function JobDetailPage() {
         postingDate: ''
     });
 
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState("unliked");
 
     useEffect(() => {
         if (jobId) {
@@ -42,27 +42,37 @@ export default function JobDetailPage() {
             .catch(error => console.log(error));
         }
     }, []);
-    /*
+    
     useEffect(() => {
         if (username) {
             axios.get('/users/checkFav/' + jobId)
             .then(response => {
-                if(response) setLiked(true);
+                console.log(response)
+                if(response.data === "liked") setLiked("liked");
+                else setLiked("unliked")
+                console.log(liked)
             })
             .catch(error => console.log(error));
         }
-    }, []);*/
+    }, []);
 
 
     const addOrDeleteFav = () => {
         if(username) {
-            if(!liked){
+            if(liked === "unliked"){
                 axios.post('/favorites/addFavorite', {fav: jobDetail})
-                    .then(response => {console.log(response)})
+                    .then(response => {
+                        console.log(response)
+                        setLiked("liked")
+                    })
                     .catch(error => console.log(error))
+                
             } else {
-                axios.post('/favorites//deleteFavorite', {fav: jobDetail})
-                    .then(response => {console.log(response)})
+                axios.post('/favorites/deleteFavorite', {fav: jobDetail})
+                    .then(response => {
+                        console.log(response)
+                        setLiked("unliked")
+                    })
                     .catch(error => console.log(error))
             }
         } 
@@ -93,7 +103,7 @@ export default function JobDetailPage() {
                     <div class="card-title postdate"><BsCalendar2Date /> post date: {jobDetail.postingDate.substr(0, 10)}</div>
                     <div>
                         <button class="btn btn-danger" onClick={addOrDeleteFav}><AiOutlineHeart/> Like</button>
-                        {liked?
+                        {liked === "liked"?
                             <div>You've liked the job!</div>
                             :
                             <div>Do you want to add to your favorite list?</div>

@@ -2,7 +2,7 @@ import './Navibar.css';
 import { Link } from "react-router-dom";
 import * as Cookies from "js-cookie";
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 
@@ -10,6 +10,18 @@ export default function Navibar() {
    // let show = true;
     const [username, setUserName] = useState(Cookies.get("username"));
     //let username = Cookies.get("username");
+
+    const [background, setBackground] = useState("none");
+
+    const Navibar = () => {
+        if (window.scrollY > 30) setBackground("white");
+        else setBackground("none");
+    }
+    
+    useEffect(() => {
+        window.addEventListener('scroll', Navibar)
+        return () => window.removeEventListener('scroll', Navibar)
+    }, [])
 
     const signOut = () => {
         axios.get('/users/logout')
@@ -23,7 +35,7 @@ export default function Navibar() {
     }
 
     return (
-        <div className="Navibar fixed-top">
+        <div className="Navibar fixed-top" style={{background: background}}>
                 { !username ?
                 <div className="Buttons">
                     <Link to="/"><button>Home</button></Link>

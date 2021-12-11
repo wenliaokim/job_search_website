@@ -51,10 +51,10 @@ router.get("/checkFav/:id", function(req, res) {
     return UserAccessor.findUserByUsername(username)
             .then(response => {
                 const index = response.favorites.indexOf(id);
-                if(index) {
-                    res.status(200).send(true);
+                if(index !== -1) {
+                    res.status(200).send("liked");
                 }else {
-                    res.status(200).send(false);
+                    res.status(200).send("unliked");
                 }
             })
             .catch(error => res.status(400).send(error))

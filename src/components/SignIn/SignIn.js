@@ -16,16 +16,15 @@ export default function SignIn() {
 
     // const navigate = useNavigate();
     const history = useHistory();
-    const location = useLocation();
+   // const location = useLocation();
 
     const onSubmit = () => {
         axios.post('/users/login', userInput)
         .then(response => {
             console.log(response.data);
             Cookies.set("username", response.data.username);
-            history.push(response.data.url);
-            //history.push('/');
-            //setTimeout(window.location.reload.bind(window.location), 250);
+            history.push("/");
+            setTimeout(window.location.reload.bind(window.location), 250);
         })
         // .then (() => navigate('/'))
         .catch(error => console.log(error));
