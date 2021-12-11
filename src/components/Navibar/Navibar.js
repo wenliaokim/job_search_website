@@ -33,7 +33,7 @@ export default function Navibar() {
                 :
                 <div className="Buttons">
                     <Link to="/"><button>Home</button></Link>
-                    <button>Favorites</button>
+                    <Link to="/favorites"><button>Favorites</button></Link>
                     <button onClick={() => signOut()}>Sign Out</button>
                     <Link to="/createjob"><button>Create Job</button></Link>
                     <button  className="UserNameButton"><FaUserCircle className="UserIcon"/> {username}</button>

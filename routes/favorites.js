@@ -13,11 +13,12 @@ router.get('/', Middleware.IsLoggedIn, function(req, res) {
 router.post('/addFavorite', Middleware.IsLoggedIn, function(req, res) {
     const username = req.username;
     const {fav} = req.body;
-    return UserAccessor.findUserByUsername(username)
+    return UserAccessor.findUserByUsernameThenAddFav(username, fav)
         .then( (favResponse) => {
             favResponse.favorites.push(fav);
-            res.status(200).send("Successfully favorited!");
+            favResponse.save();
         })
+        .then( response => res.status(200).send(response))
         .catch(error => res.status(400).send(error));
 })
 
@@ -26,10 +27,11 @@ router.post('/deleteFavorite', Middleware.IsLoggedIn, function(req, res) {
     const {fav} = req.body;
     return UserAccessor.findUserByUsername(username)
         .then( (favResponse) => {
-            const index = favResponse.favorites.indexOf(fav);
+            const index = favResponse.favorites.indexOf(fav._id);
             favResponse.favorites.splice(index, 1);
-            res.status(200).send("Successfully un-favorited!");
+            favResponse.save();
         })
+        .then( response => res.status(200).send("Successfully un-favorited!"))
         .catch(error => res.status(400).send(error));
 })
 

@@ -14,31 +14,25 @@ router.post('/searchJobs', function(req, res) {
 
 // job details 
 router.get('/searchJobs/JobDetail/:id', function(req, res) {
-    const username = req.session.username;
     const id = req.params.id;
     return JobAccessor.findJobById(id)
         .then((jobResponse) => {
-            if(jobResponse.username === username) {
-                res.status(200).send({jobResponse: jobResponse, ifBelongToUser: true})
-            } else {
-                res.status(200).send({jobResponse: jobResponse, ifBelongToUser: false})
-            }
+            res.status(200).send({jobResponse: jobResponse, ifBelongToUser: true})
         }) 
         .catch(error => res.status(400).send(error))
 })
 
 // job edit 
-router.put('/searchJobs/JobDetail/:id', Middleware.whoisLoggedIn, function(req, res) {
-    const username = req.session.username;
+router.put('/searchJobs/JobDetail/:id', function(req, res) {
+    //const username = req.session.username;
     const id = req.params.id;
     return JobAccessor.findJobByIdAndUpdate(id, {...req.body})
         .then((jobResponse) => {
-            if(jobResponse.username === username) {
-                res.status(200).send(jobResponse)
-            } else {
-                res.status(404).send("You are not authorized to edit this job!");
-            }
-        }) // if length == 0, nothing found
+            //if(jobResponse.username === username) {
+            res.status(200).send(jobResponse)
+
+              //  res.status(404).send("You are not authorized to edit this job!");
+        }) 
         .catch(error => res.status(400).send(error))
 })
 

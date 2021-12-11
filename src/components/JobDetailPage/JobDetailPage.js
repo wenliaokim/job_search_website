@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
-import { AiOutlineMail, AiOutlineGlobal } from "react-icons/ai";
+import { AiOutlineMail, AiOutlineGlobal, AiOutlineHeart } from "react-icons/ai";
 import { BsCalendar2Date } from "react-icons/bs";
 import "./JobDetailPage.css";
 import * as Cookies from "js-cookie";
@@ -29,6 +29,8 @@ export default function JobDetailPage() {
         postingDate: ''
     });
 
+    const [liked, setLiked] = useState(false);
+
     useEffect(() => {
         if (jobId) {
             axios.get('/jobsearch/searchJobs/JobDetail/' + jobId)
@@ -40,6 +42,34 @@ export default function JobDetailPage() {
             .catch(error => console.log(error));
         }
     }, []);
+    /*
+    useEffect(() => {
+        if (username) {
+            axios.get('/users/checkFav/' + jobId)
+            .then(response => {
+                if(response) setLiked(true);
+            })
+            .catch(error => console.log(error));
+        }
+    }, []);*/
+
+
+    const addOrDeleteFav = () => {
+        if(username) {
+            if(!liked){
+                axios.post('/favorites/addFavorite', {fav: jobDetail})
+                    .then(response => {console.log(response)})
+                    .catch(error => console.log(error))
+            } else {
+                axios.post('/favorites//deleteFavorite', {fav: jobDetail})
+                    .then(response => {console.log(response)})
+                    .catch(error => console.log(error))
+            }
+        } 
+        else {
+            history.push("/signin")
+        }
+    }
 
     const deleteJob = () => {
         axios.delete('/jobsearch/searchJobs/JobDetail/' + jobId)
@@ -61,6 +91,14 @@ export default function JobDetailPage() {
                         <span class="card-title"><GoLocation /> {jobDetail.location}</span>
                     </div>
                     <div class="card-title postdate"><BsCalendar2Date /> post date: {jobDetail.postingDate.substr(0, 10)}</div>
+                    <div>
+                        <button class="btn btn-danger" onClick={addOrDeleteFav}><AiOutlineHeart/> Like</button>
+                        {liked?
+                            <div>You've liked the job!</div>
+                            :
+                            <div>Do you want to add to your favorite list?</div>
+                        }
+                    </div>
                     <div className="DescriptionTitle"><b>Description: </b></div>
                     <div className="card-text DescriptionDisplay" dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobDetail.jobDescription))}} />
                     <div class="Employer">

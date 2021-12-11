@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import "./EditJobPage.css";
 import { useParams, useHistory } from "react-router-dom";
@@ -12,9 +12,11 @@ export default function EditJobPage() {
 
     let params = useParams();
     let jobId = params.id;
-    const history = useHistory();
+    //const history = useHistory();
 
+    const [editorState, seteditorState] = useState(() => EditorState.createEmpty());
     const [jobData, setJobData] = useState({
+        _id: '',
         username: '',
         title: '', 
         companyName: '',
@@ -34,8 +36,10 @@ export default function EditJobPage() {
         }
     }, []);
 
+    useEffect(() => {
+        seteditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(jobData.jobDescription))));
+    }, [jobData._id]);
 
-    const [editorState, seteditorState] = useState(() => EditorState.createEmpty());
 
     const onTitleChange = (event) => {setJobData({...jobData, title: event.target.value})};
     const onCompanyChange = (event) => {setJobData({...jobData, companyName: event.target.value})};
@@ -49,7 +53,7 @@ export default function EditJobPage() {
     const onEmailChange = (event) => {setJobData({...jobData, employerEmail: event.target.value})};
     const onWebsiteChange = (event) => {setJobData({...jobData, website: event.target.value})};
 
-    const onCreateJob = () => {
+    const onEditJob = () => {
         console.log(jobData);
         let errorMessage = "";
         if (!jobData.title.trim()) errorMessage = "Invalid title input";
@@ -59,9 +63,9 @@ export default function EditJobPage() {
         else if (!jobData.employerEmail.trim()) errorMessage = "Invalid email input";
         console.log(errorMessage);
         if (!errorMessage) {
-            axios.post('/jobsearch/createJob', {...jobData, username: Cookies.get("username")})
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
+            axios.put(`/jobsearch/searchJobs/JobDetail/${jobId}`, {...jobData, username: Cookies.get("username")})
+                 .then(response => console.log(response))
+                 .catch(error => console.log(error));
         }
         // console.log(jobData.jobDescription);
     }
@@ -72,7 +76,7 @@ export default function EditJobPage() {
                 <div className="CreateJobPage">
                         <h1 className='CreateJobTitle'>Create Job</h1>
                         <div className="control">
-                            <input type="text" placeholder='Job Title:' value={jobData.title} onChange={onTitleChange}/>
+                            <input type="text" placeholder='Job Title:' value={jobData.title} onChange={onTitleChange} required/>
                         </div>
                         <div className="control">
                             <input type="text" placeholder='Company:' value={jobData.companyName} onChange={onCompanyChange}/>
@@ -94,7 +98,7 @@ export default function EditJobPage() {
                             <input type="email" placeholder='Contact Email:' value={jobData.employerEmail} onChange={onEmailChange}/>
                             <input type="text" placeholder='Company Website:' value={jobData.website} onChange={onWebsiteChange}/>
                         </div>
-                    <button className="logininbutton" onClick={onCreateJob}>Submit</button>
+                    <button className="logininbutton" onClick={onEditJob}>Submit</button>
                     {/* <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobData.jobDescription))}} /> */}
                 </div>
             </div>
