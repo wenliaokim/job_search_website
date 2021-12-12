@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
-import { AiOutlineMail, AiOutlineGlobal, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineMail, AiOutlineGlobal } from "react-icons/ai";
 import { BsCalendar2Date } from "react-icons/bs";
 import "./JobDetailPage.css";
 import * as Cookies from "js-cookie";
@@ -30,50 +30,33 @@ export default function JobDetailPage() {
         postingDate: ''
     });
 
-    const [liked, setLiked] = useState("unliked");
+    const [liked, setLiked] = useState(false);
 
     useEffect(() => {
         if (jobId) {
             axios.get('/jobsearch/searchJobs/JobDetail/' + jobId)
+            .then(response => setJobDetail(response.data.jobResponse))
+            .catch(error => console.log(error));
+        }
+        if (username) {
+            axios.get('/users/checkFav/' + jobId)
             .then(response => {
-                setJobDetail(response.data.jobResponse)
-                console.log(response.data)
-                console.log(jobDetail.username);
+                if(response.data === "liked") setLiked(true);
+                else setLiked(false)
             })
             .catch(error => console.log(error));
         }
     }, []);
     
-    useEffect(() => {
-        if (username) {
-            axios.get('/users/checkFav/' + jobId)
-            .then(response => {
-                console.log(response)
-                if(response.data === "liked") setLiked("liked");
-                else setLiked("unliked")
-                console.log(liked)
-            })
-            .catch(error => console.log(error));
-        }
-    }, []);
-
-
     const addOrDeleteFav = () => {
         if(username) {
-            if(liked === "unliked"){
+            if(!liked){
                 axios.post('/favorites/addFavorite', {fav: jobDetail})
-                    .then(response => {
-                        console.log(response)
-                        setLiked("liked")
-                    })
-                    .catch(error => console.log(error))
-                
+                    .then(() => setLiked(true))
+                    .catch(error => console.log(error))  
             } else {
                 axios.post('/favorites/deleteFavorite', {fav: jobDetail})
-                    .then(response => {
-                        console.log(response)
-                        setLiked("unliked")
-                    })
+                    .then(() => setLiked(false))
                     .catch(error => console.log(error))
             }
         } 
@@ -85,7 +68,7 @@ export default function JobDetailPage() {
     const deleteJob = () => {
         axios.delete('/jobsearch/searchJobs/JobDetail/' + jobId)
             .then(() => {
-                axios.post('/favorites/deleteFavorite', {fav: jobDetail})
+                axios.post('/favorites/deleteFavorite', { fav: jobDetail })
                 history.push('/');
             })
             .catch(error => console.log(error));
@@ -94,37 +77,45 @@ export default function JobDetailPage() {
     return (
         <div className="ResultBackground">
         <div className="JobDetail">
-            <div class="card">
-                <div class="card-header">job detail</div>
-                <button class="btn" onClick={()=>{history.goBack()}}>Go back</button>
-                <img class="card-img-left icon" src={jobDetail.iconUrl} width="100" height="100" />
-                <div class="card-body">
-                    <h4 class="card-title">{jobDetail.title}</h4>
-                    <div class="CompanyAndLocation">
-                        <span class="card-title"><IoBusinessSharp /> <b>{jobDetail.companyName}</b></span>
-                        <span class="card-title"><GoLocation /> {jobDetail.location}</span>
-                    </div>
-                    <div class="card-title postdate"><BsCalendar2Date /> post date: {jobDetail.postingDate.substr(0, 10)}</div>
-                    <div>
-                        <button class="btn btn-danger" onClick={addOrDeleteFav}><AiOutlineHeart/> Like</button>
-                        {liked === "liked"?
-                            <div>You've liked the job!</div>
-                            :
-                            <div>Do you want to add to your favorite list?</div>
-                        }
+            <div className="card">
+                <div className="card-header">
+                    <div>job detail</div>
+                    <button className="btn btn-outline-light" onClick={()=>{history.goBack()}}>Go back</button>
+                </div>
+                <div className="card-body">
+                    <div className="firstPart">
+                        <img className="icon my-3" src={jobDetail.iconUrl} width="100" height="100" />
+                        <h4 className="card-title mb-3">{jobDetail.title}</h4>
+                        <div className="CompanyAndLocation">
+                            <span className="card-title"><IoBusinessSharp /> <b>{jobDetail.companyName}</b></span>
+                            <span className="card-title"><GoLocation /> {jobDetail.location}</span>
+                        </div>
+                        <div className="card-title postdate">
+                            <BsCalendar2Date /> post date: {jobDetail.postingDate.substr(0, 10)}
+                        </div>
+                        <button 
+                            className={liked ? "btn btn-danger likeButton" : "btn btn-outline-danger likeButton"}
+                            onClick={addOrDeleteFav}>
+                            {liked ? "unlike" : "like"}
+                        </button>
                     </div>
                     <div className="DescriptionTitle"><b>Description: </b></div>
-                    <div className="card-text DescriptionDisplay" dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobDetail.jobDescription))}} />
-                    <div class="Employer">
-                        <span><b>Employeer Info:</b></span>
+                    <div className="card-text DescriptionDisplay" 
+                        dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobDetail.jobDescription))}} />
+                    <div className="Employer">
+                        <div><b>Employeer Info:</b></div>
                         <a href="mailto:m.bluth@example.com" className="card-title"><AiOutlineMail /> {jobDetail.employerEmail}</a>
-                        {jobDetail.website ? <span class="card-title"><AiOutlineGlobal /> {jobDetail.website}</span> :<></>}
+                        {jobDetail.website ? 
+                            <a href={jobDetail.website} className="card-title" target="_blank">
+                                    <AiOutlineGlobal/> {jobDetail.website}
+                            </a> 
+                            :<></>}
                     </div>
                 </div>
-                {username === jobDetail.username && username ?
-                    <div class="card-footer">
-                         <Link to={`/editjob/${jobDetail._id}`}><button class="btn btn-secondary updateButton">Edit</button> </Link>
-                        <button class="btn btn-secondary" onClick={() => deleteJob()}>Delete</button>
+                { username === jobDetail.username && username ?
+                    <div className="card-footer">
+                        <Link to={`/editjob/${jobDetail._id}`}><button className="btn btn-secondary updateButton">Edit</button></Link>
+                        <button className="btn btn-secondary" onClick={() => deleteJob()}>Delete</button>
                     </div>
                     : <></>
                 }

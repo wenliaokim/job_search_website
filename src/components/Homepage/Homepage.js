@@ -11,7 +11,7 @@ export default function Homepage() {
     return (
         <div className="Homepage">
             <div className="Background"></div>
-            <h1 className="title">Job Search</h1>
+            <h1 className="Title">Job Search</h1>
             <div className="InputBox">
                 <input className="Input" type="text" onChange={ onSearchLinkChange }/>
                 <Link to={searchLink}><button className="Enter"><BsSearch className="SearchIcon"/></button></Link>

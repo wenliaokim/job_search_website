@@ -65,27 +65,30 @@ export default function EditJobPage() {
         else if (!jobData.location.trim()) errorMessage = "Invalid location input";
         else if (!JSON.parse(jobData.jobDescription).blocks[0].text) errorMessage = "Invalid location input";
         else if (!jobData.employerEmail.trim()) errorMessage = "Invalid email input";
-        console.log(errorMessage);
+
+        if (errorMessage) {
+            window.alert(errorMessage);
+            return;
+        }
 
         if(selectedFile) {
             const formData = new FormData();
             formData.append("file", selectedFile);
             formData.append("upload_preset", "sqzhymmy");
-
             axios.post("https://api.cloudinary.com/v1_1/dn5oslw1q/image/upload", formData)
                 .then((response) => {
                     if (!errorMessage) {
-                        axios.put(`/jobsearch/searchJobs/JobDetail/${jobId}`, {...jobData, iconUrl: response.data.url, username: Cookies.get("username")})
+                        axios.put(`/jobsearch/searchJobs/JobDetail/${jobId}`, 
+                            {...jobData, iconUrl: response.data.url, username: Cookies.get("username")}
+                        )
                         history.goBack();
                     }
                 })
                 .catch((error) => {console.log(error)});
-        }else {
-            if (!errorMessage) {
-                axios.put(`/jobsearch/searchJobs/JobDetail/${jobId}`, {...jobData, username: Cookies.get("username")})
-               .then(() => history.goBack())
-               .catch(error => console.log(error));
-           }
+        } else {
+            axios.put(`/jobsearch/searchJobs/JobDetail/${jobId}`, {...jobData, username: Cookies.get("username")})
+            .then(() => history.goBack())
+            .catch(error => console.log(error));
         }
     }
 
@@ -96,38 +99,40 @@ export default function EditJobPage() {
             <div className="ResultBackground">
                 <div className="Container">
                     <div className="CreateJobPage">
-                            <h1 className='CreateJobTitle'>Edit Job</h1>
-                            <div className="control">
-                                <input type="text" placeholder='Job Title:' value={jobData.title} onChange={onTitleChange} required/>
-                            </div>
-                            <div className="control">
-                                <input type="text" placeholder='Company:' value={jobData.companyName} onChange={onCompanyChange}/>
-                                <input type="text" placeholder='Location:' value={jobData.location} onChange={onLocationChange}/>
-                            </div>
+                        <h1 className='CreateJobTitle'>Edit Job</h1>
+                        <div className="control">
+                            <input type="text" placeholder='Job Title:' value={jobData.title} onChange={onTitleChange} required/>
+                        </div>
+                        <div className="control">
+                            <input type="text" placeholder='Company:' value={jobData.companyName} onChange={onCompanyChange}/>
+                            <input type="text" placeholder='Location:' value={jobData.location} onChange={onLocationChange}/>
+                        </div>
 
-                            <div className="fileInput">
-                                <p>Upload Company Icon: </p >
-                                <input type="file" onChange={onSelectFile}/>
-                            </div>
+                        <div className="fileInput">
+                            <p>Upload Company Icon: </p >
+                            <input type="file" onChange={onSelectFile}/>
+                        </div>
 
-                            <div className="control control-2">
-                                <div className="description">Description:</div>
-                                <div className="Editor">
-                                    <Editor
-                                        editorState={editorState}
-                                        wrapperClassName="demo-wrapper"
-                                        editorClassName="demo-editor"
-                                        onEditorStateChange={seteditorState}
-                                        onChange={() => onDescriptionChange()}
-                                    />
-                                </div>
+                        <div className="control control-2">
+                            <div className="description">Description:</div>
+                            <div className="Editor">
+                                <Editor
+                                    editorState={editorState}
+                                    wrapperClassName="demo-wrapper"
+                                    editorClassName="demo-editor"
+                                    onEditorStateChange={seteditorState}
+                                    onChange={() => onDescriptionChange()}
+                                />
                             </div>
-                            <div className="control">
-                                <input type="email" placeholder='Contact Email:' value={jobData.employerEmail} onChange={onEmailChange}/>
-                                <input type="text" placeholder='Company Website:' value={jobData.website} onChange={onWebsiteChange}/>
-                            </div>
-                        <button className="logininbutton" onClick={onEditJob}>Submit</button>
-                        {/* <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobData.jobDescription))}} /> */}
+                        </div>
+                        <div className="control">
+                            <input type="email" placeholder='Contact Email:' value={jobData.employerEmail} onChange={onEmailChange}/>
+                            <input type="text" placeholder='Company Website:' value={jobData.website} onChange={onWebsiteChange}/>
+                        </div>
+                        <div className="buttonGroups">
+                            <button className="btn btn-outline-light mt-5 mb-3" onClick={() => history.goBack()}>back</button>
+                            <button className="btn btn-light py-2 mt-5 mb-3" onClick={onEditJob}>Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>

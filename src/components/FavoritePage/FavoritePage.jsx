@@ -1,14 +1,11 @@
-import { useParams, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import JobPage from "../JobPage/JobPage";
-import "./FavResultsPage.css";
 import * as Cookies from "js-cookie";
 
 export default function FavoritePage() {
-
     let username = Cookies.get("username");
-
     const [favResults, setFavResults] = useState([]);
 
     useEffect(() => {

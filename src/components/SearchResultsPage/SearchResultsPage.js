@@ -12,7 +12,6 @@ export default function SearchResultsPage() {
     useEffect(() => {
         if (jobKey) {
             axios.post('/jobsearch/searchJobs', {title: jobKey})
-            // .then(response => console.log(response.data))
             .then(response => setSearchResults(response.data))
             .catch(error => console.log(error));
         }
@@ -26,10 +25,8 @@ export default function SearchResultsPage() {
 
     return (
         <div className="ResultBackground">
-            <h1 className="ResultTitle">Search result: </h1>
-            <div className="JobList">
-                {jobDiv}
-            </div>
+            <h1 className="ResultTitle">Search result:</h1>
+            <div className="JobList"> {jobDiv} </div>
         </div>
     )
 }

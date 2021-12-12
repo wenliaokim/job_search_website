@@ -1,33 +1,27 @@
-import { Link, useHistory, useLocation } from "react-router-dom";
-// import { useNavigate } from "react-router";
+import { Link, useHistory } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
 import * as Cookies from "js-cookie";
 import './SignIn.css';
-const queryString = require('query-string');
-
 
 export default function SignIn() {
-    const [userInput, setUserInput] = useState({
-        username:'', password:''
-    })
+    const [userInput, setUserInput] = useState({username:'', password:''});
     const onUsernameChange = (e) => {setUserInput({...userInput, username: e.target.value})};
     const onPasswordChange = (e) => {setUserInput({...userInput, password: e.target.value})};
 
-    // const navigate = useNavigate();
     const history = useHistory();
-   // const location = useLocation();
 
     const onSubmit = () => {
         axios.post('/users/login', userInput)
         .then(response => {
-            console.log(response.data);
             Cookies.set("username", response.data.username);
             history.goBack();
             setTimeout(window.location.reload.bind(window.location), 100);
         })
-        // .then (() => navigate('/'))
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error)
+            window.alert("wrong username/password");
+        });
     }
 
     return (

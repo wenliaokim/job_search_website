@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@600&display=swap');
 
 .ResultTitle {
     text-align: center;
     padding-top: 100px;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Readex Pro', sans-serif;
+    color: #282a37;
 }
 
 .JobList {
     display: flex;
-    /* grid-template-columns: 1fr 1fr 1fr; */
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
     width: 50%;
     margin-top: 50px;
     margin-left: auto;

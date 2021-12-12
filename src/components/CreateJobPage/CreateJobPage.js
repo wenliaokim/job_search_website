@@ -3,11 +3,11 @@ import { useHistory, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./CreateJobPage.css";
 import * as Cookies from "js-cookie";
 
 const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+const noImageUrl = "https://res.cloudinary.com/dn5oslw1q/image/upload/v1639337656/2048px-No_image_available.svg_w9kbj7.png";
 
 export default function CreateJobPage() {
     const [jobData, setJobData] = useState({
@@ -41,14 +41,17 @@ export default function CreateJobPage() {
     const onSelectFile = (event) => {setSelectedFile(event.target.files[0])}
 
     const onCreateJob = () => {
-        console.log(jobData);
         let errorMessage = "";
         if (!jobData.title.trim()) errorMessage = "Invalid title input";
         else if (!jobData.companyName.trim()) errorMessage = "Invalid company input";
         else if (!jobData.location.trim()) errorMessage = "Invalid location input";
         else if (!JSON.parse(jobData.jobDescription).blocks[0].text) errorMessage = "Invalid location input";
         else if (!jobData.employerEmail.trim()) errorMessage = "Invalid email input";
-        console.log(errorMessage);
+
+        if (errorMessage) {
+            window.alert(errorMessage);
+            return;
+        }
 
         if(selectedFile) {
             const formData = new FormData();
@@ -63,14 +66,11 @@ export default function CreateJobPage() {
                     }
                 })
                 .catch((error) => {console.log(error)});
-        }else {
-            if (!errorMessage) {
-                axios.post('/jobsearch/createJob', {...jobData, username: Cookies.get("username")})
-               .then((response) => history.push('/jobDetail/' + response.data._id))
-               .catch(error => console.log(error));
-           }
+        } else {
+            axios.post('/jobsearch/createJob', {...jobData, iconUrl: noImageUrl, username: Cookies.get("username")})
+            .then((response) => history.push('/jobDetail/' + response.data._id))
+            .catch(error => console.log(error));
         }
-    
     }
 
     return (
@@ -80,35 +80,34 @@ export default function CreateJobPage() {
             <div className="ResultBackground">
                 <div className="Container">
                     <div className="CreateJobPage">
-                            <h1 className='CreateJobTitle'>Create Job</h1>
-                            <div className="control">
-                                <input type="text" placeholder='Job Title:' onChange={onTitleChange}/>
+                        <h1 className='CreateJobTitle'>Create Job</h1>
+                        <div className="control">
+                            <input type="text" placeholder='Job Title:' onChange={onTitleChange} />
+                        </div>
+                        <div className="control">
+                            <input type="text" placeholder='Company:' onChange={onCompanyChange}/>
+                            <input type="text" placeholder='Location:' onChange={onLocationChange}/>
+                        </div>
+                        <div className="fileInput">
+                            <p>Upload Company Icon: </p >
+                            <input type="file" onChange={onSelectFile}/>
+                        </div>
+                        <div className="control control-2">
+                            <div className="description">Description:</div>
+                            <div className="Editor">
+                                <Editor
+                                    editorState={editorState}
+                                    wrapperClassName="demo-wrapper"
+                                    editorClassName="demo-editor"
+                                    onEditorStateChange={seteditorState}
+                                    onChange={() => onDescriptionChange()}
+                                />
                             </div>
-                            <div className="control">
-                                <input type="text" placeholder='Company:' onChange={onCompanyChange}/>
-                                <input type="text" placeholder='Location:' onChange={onLocationChange}/>
-                            </div>
-
-                            <div className="fileInput">
-                                <p>Upload Company Icon: </p >
-                                <input type="file" onChange={onSelectFile}/>
-                            </div>
-                            <div className="control control-2">
-                                <div className="description">Description:</div>
-                                <div className="Editor">
-                                    <Editor
-                                        editorState={editorState}
-                                        wrapperClassName="demo-wrapper"
-                                        editorClassName="demo-editor"
-                                        onEditorStateChange={seteditorState}
-                                        onChange={() => onDescriptionChange()}
-                                    />
-                                </div>
-                            </div>
-                            <div className="control">
-                                <input type="email" placeholder='Contact Email:' onChange={onEmailChange}/>
-                                <input type="text" placeholder='Company Website:'onChange={onWebsiteChange}/>
-                            </div>
+                        </div>
+                        <div className="control">
+                            <input type="email" placeholder='Contact Email:' onChange={onEmailChange}/>
+                            <input type="text" placeholder='Company Website:'onChange={onWebsiteChange}/>
+                        </div>
                         <button className="logininbutton" onClick={onCreateJob}>Submit</button>
                     </div>
                 </div>

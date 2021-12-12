@@ -14,12 +14,17 @@ export default function Register() {
     const onPasswordReChange = (e) => {setPasswordRepetition(e.target.value)};
 
     const onSubmit = () => {
-        if (passwordRepetition !== userInfo.password) {
-            console.log("not input same password")
-        } else {
+        if (userInfo.password === "") 
+            window.alert("cannot input empty password");
+        else if (passwordRepetition !== userInfo.password) 
+            window.alert("not input same password");
+        else {
             axios.post('/users/createUser', userInfo)
             .then(response => console.log(response))
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error);
+                window.alert("username already be used");
+            });
         }
     }
 

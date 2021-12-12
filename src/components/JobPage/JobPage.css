@@ -1,5 +1,3 @@
-
-
 .JobPage .card {
     color: white;
     background-color: #23191baf;
@@ -49,4 +47,47 @@
     margin-top: 15px;
     color: whitesmoke;
     text-decoration: underline;
+}
+
+@media(max-width: 760px) {
+    .JobPage .card-body {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .JobPage .icon {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+    .JobPage .JobName {
+        font-size: 1.5em;
+    }
+
+    .CompanyAndLocation {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media(max-width: 540px) {
+    .JobPage .JobName {
+        font-size: 1em;
+    }
+
+    .CompanyAndLocation {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .CompanyAndLocation .card-title {
+        font-size: 0.8em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .JobPage .DetailButton {
+        font-size: 0.8em;
+    }
 }

@@ -104,3 +104,54 @@
 .CreateJobPage .logininbutton {
     background-color: white;
 }
+
+
+@media(max-width: 800px) {
+    .CreateJobTitle {
+        font-size: 1.5em;
+    }
+
+    .fileInput {
+        font-size: 12px;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .description {
+        font-size: 12px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    ::-webkit-input-placeholder {
+        color: white;
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .Editor {
+        font-size: 12px;;
+    }
+}
+
+@media(max-width: 540px) {
+    .CreateJobPage .control {
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .CreateJobPage .control input {
+        width: 100%;
+    }
+
+    .fileInput {
+        position: relative;
+        margin: 20px 0 10px 0;
+        width: 100%;
+        gap: 0;
+    }
+}

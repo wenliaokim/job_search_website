@@ -1,15 +1,11 @@
-
 .Navibar {
-    /* position: absolute; */
     transition-timing-function: ease-in;
     transition:0.5s;
-    /* background-color: rgb(95, 93, 93); */
 }
 
 .Buttons {
     text-align: right;
     width: 100%;
-    /* background-color: rgb(221, 216, 216); */
 }
 
 .Buttons button {
@@ -34,4 +30,38 @@
 .UserNameButton:hover {
     color: rgb(56, 55, 55);
     text-decoration: none;
+}
+
+.MobileButton {
+    display: none;
+}
+
+@media(max-width: 700px) {
+    .MobileButton {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 30px 10px 0;
+        font-size: 2em;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+        cursor: pointer;
+    }
+
+    .Buttons {
+        padding-top: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        background-color: white;
+        position: absolute;
+        left: 200%;
+        transition: all 0.7s ease;
+    }
+
+    .Buttons.active {
+        left: 0;
+        transition: all 0.7s ease;
+    }
 }

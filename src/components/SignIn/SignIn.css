@@ -7,7 +7,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 30%;
+    width: 400px;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -111,4 +111,29 @@
 
 .register:hover {
     transform: scale(1.1);
+}
+
+@media(max-width: 540px) {
+  .signInBackground {
+    width: 250px;
+  }
+
+  .logintitle {
+    font-size: 1em;
+    line-height: 2em;
+  }
+
+  .control input {
+    font-size: 10px;
+  }
+
+  .logininbutton {
+    font-size: 10px;
+    padding: 10px;
+    letter-spacing: 0;
+  }
+
+  .textForRegister, .register {
+    font-size: 0.8em;
+  }
 }
