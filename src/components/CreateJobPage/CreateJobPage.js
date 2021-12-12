@@ -59,14 +59,14 @@ export default function CreateJobPage() {
                 .then((response) => {
                     if (!errorMessage) {
                         axios.post('/jobsearch/createJob', {...jobData, iconUrl: response.data.url, username: Cookies.get("username")})
-                        history.goBack();
+                        .then((response) => history.push('/jobDetail/' + response.data._id))
                     }
                 })
                 .catch((error) => {console.log(error)});
         }else {
             if (!errorMessage) {
                 axios.post('/jobsearch/createJob', {...jobData, username: Cookies.get("username")})
-               .then(() => history.goBack())
+               .then((response) => history.push('/jobDetail/' + response.data._id))
                .catch(error => console.log(error));
            }
         }

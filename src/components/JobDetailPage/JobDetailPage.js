@@ -18,6 +18,7 @@ export default function JobDetailPage() {
     const history = useHistory();
 
     const [jobDetail, setJobDetail] = useState({
+        iconUrl:'',
         _id: '',
         username: '',
         title: '',
@@ -85,7 +86,7 @@ export default function JobDetailPage() {
         axios.delete('/jobsearch/searchJobs/JobDetail/' + jobId)
             .then(() => {
                 axios.post('/favorites/deleteFavorite', {fav: jobDetail})
-                history.goBack();
+                history.push('/');
             })
             .catch(error => console.log(error));
     }
@@ -96,6 +97,7 @@ export default function JobDetailPage() {
             <div class="card">
                 <div class="card-header">job detail</div>
                 <button class="btn" onClick={()=>{history.goBack()}}>Go back</button>
+                <img class="card-img-left icon" src={jobDetail.iconUrl} width="100" height="100" />
                 <div class="card-body">
                     <h4 class="card-title">{jobDetail.title}</h4>
                     <div class="CompanyAndLocation">
