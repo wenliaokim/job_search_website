@@ -28,6 +28,10 @@
     margin-bottom: 20px;
 }
 
+.JobDetail .icon {
+    margin-left: 20px;
+}
+
 
 .JobDetail .updateButton {
     margin-right: 20px;

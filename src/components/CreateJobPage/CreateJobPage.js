@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -10,6 +11,7 @@ const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unsty
 
 export default function CreateJobPage() {
     const [jobData, setJobData] = useState({
+        iconUrl: '',
         username: '',
         title: '', 
         companyName: '',
@@ -18,7 +20,12 @@ export default function CreateJobPage() {
         employerEmail: '',
         website: '' 
     });
+
+    const history = useHistory();
+
     const [editorState, seteditorState] = useState(() => EditorState.createEmpty());
+    const [selectedFile, setSelectedFile] = useState(null);
+
 
     const onTitleChange = (event) => {setJobData({...jobData, title: event.target.value})};
     const onCompanyChange = (event) => {setJobData({...jobData, companyName: event.target.value})};
@@ -31,6 +38,7 @@ export default function CreateJobPage() {
     };
     const onEmailChange = (event) => {setJobData({...jobData, employerEmail: event.target.value})};
     const onWebsiteChange = (event) => {setJobData({...jobData, website: event.target.value})};
+    const onSelectFile = (event) => {setSelectedFile(event.target.files[0])}
 
     const onCreateJob = () => {
         console.log(jobData);
@@ -41,46 +49,71 @@ export default function CreateJobPage() {
         else if (!JSON.parse(jobData.jobDescription).blocks[0].text) errorMessage = "Invalid location input";
         else if (!jobData.employerEmail.trim()) errorMessage = "Invalid email input";
         console.log(errorMessage);
-        if (!errorMessage) {
-            axios.post('/jobsearch/createJob', {...jobData, username: Cookies.get("username")})
-            .then(response => console.log(response))
-            .catch(error => console.log(error));
+
+        if(selectedFile) {
+            const formData = new FormData();
+            formData.append("file", selectedFile);
+            formData.append("upload_preset", "sqzhymmy");
+
+            axios.post("https://api.cloudinary.com/v1_1/dn5oslw1q/image/upload", formData)
+                .then((response) => {
+                    if (!errorMessage) {
+                        axios.post('/jobsearch/createJob', {...jobData, iconUrl: response.data.url, username: Cookies.get("username")})
+                        .then((response) => history.push('/jobDetail/' + response.data._id))
+                    }
+                })
+                .catch((error) => {console.log(error)});
+        }else {
+            if (!errorMessage) {
+                axios.post('/jobsearch/createJob', {...jobData, username: Cookies.get("username")})
+               .then((response) => history.push('/jobDetail/' + response.data._id))
+               .catch(error => console.log(error));
+           }
         }
-        // console.log(jobData.jobDescription);
+    
     }
 
     return (
-        <div className="ResultBackground">
-            <div className="Container">
-                <div className="CreateJobPage">
-                        <h1 className='CreateJobTitle'>Create Job</h1>
-                        <div className="control">
-                            <input type="text" placeholder='Job Title:' onChange={onTitleChange}/>
-                        </div>
-                        <div className="control">
-                            <input type="text" placeholder='Company:' onChange={onCompanyChange}/>
-                            <input type="text" placeholder='Location:' onChange={onLocationChange}/>
-                        </div>
-                        <div className="control control-2">
-                            <div className="description">Description:</div>
-                            <div className="Editor">
-                                <Editor
-                                    editorState={editorState}
-                                    wrapperClassName="demo-wrapper"
-                                    editorClassName="demo-editor"
-                                    onEditorStateChange={seteditorState}
-                                    onChange={() => onDescriptionChange()}
-                                />
+        <div>
+            { !Cookies.get("username") ? <Redirect to="/" /> 
+            :
+            <div className="ResultBackground">
+                <div className="Container">
+                    <div className="CreateJobPage">
+                            <h1 className='CreateJobTitle'>Create Job</h1>
+                            <div className="control">
+                                <input type="text" placeholder='Job Title:' onChange={onTitleChange}/>
                             </div>
-                        </div>
-                        <div className="control">
-                            <input type="email" placeholder='Contact Email:' onChange={onEmailChange}/>
-                            <input type="text" placeholder='Company Website:'onChange={onWebsiteChange}/>
-                        </div>
-                    <button className="logininbutton" onClick={onCreateJob}>Submit</button>
-                    {/* <div dangerouslySetInnerHTML={{ __html: draftToHtml(JSON.parse(jobData.jobDescription))}} /> */}
+                            <div className="control">
+                                <input type="text" placeholder='Company:' onChange={onCompanyChange}/>
+                                <input type="text" placeholder='Location:' onChange={onLocationChange}/>
+                            </div>
+
+                            <div className="fileInput">
+                                <p>Upload Company Icon: </p >
+                                <input type="file" onChange={onSelectFile}/>
+                            </div>
+                            <div className="control control-2">
+                                <div className="description">Description:</div>
+                                <div className="Editor">
+                                    <Editor
+                                        editorState={editorState}
+                                        wrapperClassName="demo-wrapper"
+                                        editorClassName="demo-editor"
+                                        onEditorStateChange={seteditorState}
+                                        onChange={() => onDescriptionChange()}
+                                    />
+                                </div>
+                            </div>
+                            <div className="control">
+                                <input type="email" placeholder='Contact Email:' onChange={onEmailChange}/>
+                                <input type="text" placeholder='Company Website:'onChange={onWebsiteChange}/>
+                            </div>
+                        <button className="logininbutton" onClick={onCreateJob}>Submit</button>
+                    </div>
                 </div>
             </div>
+            }
         </div>
     )
 }

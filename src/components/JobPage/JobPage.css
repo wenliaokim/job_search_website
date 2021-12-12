@@ -13,6 +13,15 @@
     color: black;
 }
 
+.JobPage .card-body {
+   display: grid;
+   grid-template-columns: 1fr 3fr;
+}
+
+.JobPage .icon {
+    margin-top: 20px;
+}
+
 .JobPage .NameAndTitle {
     display: flex;
     justify-content: center;

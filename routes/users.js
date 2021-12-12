@@ -15,7 +15,7 @@ router.post("/createUser", function(req, res) {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
 
     return UserAccessor.insertUser(req.body)
-            .then(userResponse => res.status(200).send(userResponse))
+            .then(userResponse => res.status(200).send({...userResponse}))
             .catch(error => res.status(400).send(error))
 
 })
@@ -42,6 +42,22 @@ router.post("/login", function(req, res) {
                 return res.status(404).send("Password Wrong!");
             }
         })
+})
+
+router.get("/checkFav/:id", function(req, res) {
+    const id = req.params.id;
+    const username = req.session.username;
+
+    return UserAccessor.findUserByUsername(username)
+            .then(response => {
+                const index = response.favorites.indexOf(id);
+                if(index !== -1) {
+                    res.status(200).send("liked");
+                }else {
+                    res.status(200).send("unliked");
+                }
+            })
+            .catch(error => res.status(400).send(error))
 })
 
 router.get("/logout", function(req, res) {

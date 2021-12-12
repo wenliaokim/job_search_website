@@ -16,9 +16,15 @@ function findUserByUsername(username) {
     // { username: username }
 }
 
+
+function findUserByUsernameThenAddFav(username) {
+    return UserModel.findOne({username: username}).exec();
+    // { username: username }
+}
 // Make sure to export a function after you create it!
 module.exports = {
     insertUser,
     getAllUsers,
     findUserByUsername,
+    findUserByUsernameThenAddFav,
 };
