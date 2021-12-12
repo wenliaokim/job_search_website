@@ -23,8 +23,8 @@ export default function SignIn() {
         .then(response => {
             console.log(response.data);
             Cookies.set("username", response.data.username);
-            history.push("/");
-            setTimeout(window.location.reload.bind(window.location), 250);
+            history.goBack();
+            setTimeout(window.location.reload.bind(window.location), 100);
         })
         // .then (() => navigate('/'))
         .catch(error => console.log(error));

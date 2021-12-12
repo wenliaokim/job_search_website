@@ -53,18 +53,14 @@
     letter-spacing: 0.2em;
 }
 
-/* .CreateJobPage .control-2 textarea {
-    background-color: rgba(0, 0, 0, 0);
-    border: 0;
-    border-bottom: 2px #fff solid;
-    display: block;
-    padding: 15px 0;
-    font-size: 15px;
+.fileInput {
+    position: relative;
+    margin: 40px 0 10px 0;
+    width: 90%;
+    display: flex;
+    gap: 40px;
     color: white;
-    letter-spacing: 0.2em;
-    width: 100%;
-    height: 150px;
-} */
+}
 
 .control-2 {
     display: flex;

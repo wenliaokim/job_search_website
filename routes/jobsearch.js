@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const JobAccessor = require('./models/Job.Model');
+const UserAccessor = require('./models/User.Model');
 const Middleware = require('./middleware.js');
 
 // homepage search bar api 
@@ -37,6 +38,7 @@ router.put('/searchJobs/JobDetail/:id', function(req, res) {
 })
 
 router.delete('/searchJobs/JobDetail/:id', function(req, res) {
+    const username = req.session.username;
     const id = req.params.id;
     return JobAccessor.findJobByIdAndDelete(id)
         .then(jobResponse => res.status(200).send("Successfully deleted"))

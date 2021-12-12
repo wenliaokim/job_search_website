@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import JobPage from "../JobPage/JobPage";
@@ -14,9 +14,7 @@ export default function FavoritePage() {
     useEffect(() => {
         if (username) {
             axios.get('/favorites')
-            // .then(response => console.log(response.data))
             .then(response => {
-                console.log(response.data)
                 setFavResults(response.data)
             })
             .catch(error => console.log(error));
@@ -30,11 +28,16 @@ export default function FavoritePage() {
     }
 
     return (
-        <div className="ResultBackground">
-            <h1 className="ResultTitle">The favorite jobs you saved: </h1>
-            <div className="JobList">
-                {jobDiv}
+        <div>
+            { !username ? <Redirect to="/" />
+            :
+            <div className="ResultBackground">
+                <h1 className="ResultTitle">The favorite jobs you saved: </h1>
+                <div className="JobList">
+                    {jobDiv}
+                </div>
             </div>
+            }
         </div>
     )
 }

@@ -83,8 +83,9 @@ export default function JobDetailPage() {
 
     const deleteJob = () => {
         axios.delete('/jobsearch/searchJobs/JobDetail/' + jobId)
-            .then(response => {
-                history.push('/');
+            .then(() => {
+                axios.post('/favorites/deleteFavorite', {fav: jobDetail})
+                history.goBack();
             })
             .catch(error => console.log(error));
     }
@@ -94,6 +95,7 @@ export default function JobDetailPage() {
         <div className="JobDetail">
             <div class="card">
                 <div class="card-header">job detail</div>
+                <button class="btn" onClick={()=>{history.goBack()}}>Go back</button>
                 <div class="card-body">
                     <h4 class="card-title">{jobDetail.title}</h4>
                     <div class="CompanyAndLocation">

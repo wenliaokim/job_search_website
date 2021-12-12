@@ -28,8 +28,10 @@ router.post('/deleteFavorite', Middleware.IsLoggedIn, function(req, res) {
     return UserAccessor.findUserByUsername(username)
         .then( (favResponse) => {
             const index = favResponse.favorites.indexOf(fav._id);
-            favResponse.favorites.splice(index, 1);
-            favResponse.save();
+            if(index !== -1) {
+                favResponse.favorites.splice(index, 1);
+                favResponse.save();
+            }
         })
         .then( response => res.status(200).send("Successfully un-favorited!"))
         .catch(error => res.status(400).send(error));
