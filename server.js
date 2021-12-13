@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');    
 
+const PORT = process.env.PORT || 8000;
+
 
 const mongoString = 'mongodb+srv://jingyi:q1w2e3r4t5@webdev.voyib.mongodb.net/jobsearch?retryWrites=true&w=majority';
 mongoose.connect(mongoString, { useNewUrlParser: true })
@@ -15,7 +17,7 @@ const mongoDB = mongoose.connection;
 mongoDB.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 
 app.use(session({secret: "my demo secret",
     store: MongoStore.create({ mongoUrl: mongoString }),
@@ -38,6 +40,6 @@ app.get('*', function (req, res) {
 });
   
 
-app.listen(8000, function() {
+app.listen(PORT, function() {
     console.log('Starting server');
 });
