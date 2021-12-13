@@ -19,8 +19,11 @@ mongoDB.on('error', console.error.bind(console, 'Error connecting to MongoDB:'))
 const app = express();
 app.use(cors());
 
-const buildPath = path.join(__dirname, '..', 'build');
-app.use(express.static(buildPath));
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('*', function (req, res) {
+    console.log("received request");
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 app.use(session({secret: "my demo secret",
     store: MongoStore.create({ mongoUrl: mongoString }),
@@ -32,15 +35,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/jobsearch', jobsearch);
 app.use('/users', users);
 app.use('/favorites', favorites);
-
-
-app.use(express.static(path.join(__dirname, 'build')));
-
-// app.get('*', function (req, res) {
-//     console.log("received request");
-//     res.sendFile(path.join(__dirname, "build", "index.html"));
-// });
-  
 
 app.listen(PORT, function() {
     console.log(`server started on port ${PORT}`);
