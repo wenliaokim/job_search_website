@@ -2,7 +2,7 @@ const express = require('express');
 const jobsearch = require('./routes/jobsearch.js');
 const users = require('./routes/users.js');
 const favorites = require('./routes/favorites.js');
-const cors = require('cors');
+// const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -16,7 +16,7 @@ const mongoDB = mongoose.connection;
 mongoDB.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 
 app.use(session({secret: "my demo secret",
     store: MongoStore.create({ mongoUrl: mongoString }),

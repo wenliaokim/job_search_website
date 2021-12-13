@@ -23,7 +23,7 @@ function App() {
                     <Route exact path="/jobDetail/:id" component={() => <JobDetailPage />} />
                     <Route exact path="/createjob" component={() => <CreateJobPage />} />
                     <Route exact path="/editjob/:id" component={() => <EditJobPage />} />
-                    <Route exact path="/favorites" component={() => <FavoritePage />} />
+                    <Route exact path="/favoritesPage" component={() => <FavoritePage />} />
                     <Redirect to="/"/>
                 </Switch>
             </Router>

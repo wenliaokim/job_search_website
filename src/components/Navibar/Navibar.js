@@ -48,7 +48,7 @@ export default function Navibar() {
             :
             <div className={ showMobileNavBar ? "Buttons active" : "Buttons"}>
                 <Link to="/"><button onClick={() => closeMobileButtion()}>Home</button></Link>
-                <Link to="/favorites"><button onClick={() => closeMobileButtion()}>Favorites</button></Link>
+                <Link to="/favoritesPage"><button onClick={() => closeMobileButtion()}>Favorites</button></Link>
                 <button 
                     onClick={() => {
                         signOut();
