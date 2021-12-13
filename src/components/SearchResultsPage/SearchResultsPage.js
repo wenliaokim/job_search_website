@@ -25,7 +25,7 @@ export default function SearchResultsPage() {
 
     return (
         <div className="ResultBackground">
-            <h1 className="ResultTitle">Search result:</h1>
+            <h1 className="ResultTitle">Search Result:</h1>
             <div className="JobList"> {jobDiv} </div>
         </div>
     )
