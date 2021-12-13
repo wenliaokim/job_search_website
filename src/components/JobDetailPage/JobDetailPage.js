@@ -64,7 +64,7 @@ export default function JobDetailPage() {
     const addOrDeleteFav = () => {
         if(username) {
             if(!liked){
-                axios.delete(API_URL + '/favorites/addFavorite', {fav: jobDetail, username: username})
+                axios.post(API_URL + '/favorites/addFavorite', {fav: jobDetail, username: username})
                     .then(() => setLiked(true))
                     .catch(error => console.log(error))  
             } else {
