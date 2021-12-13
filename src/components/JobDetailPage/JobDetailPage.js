@@ -43,11 +43,18 @@ export default function JobDetailPage() {
                 history.push('/');
             });
         } 
-
+        // if (username) {
+        //     axios.get(API_URL + '/users/checkFav/' + jobId)
+        //     .then(response => {
+        //         if (response.data === "liked") setLiked(true);
+        //         else setLiked(false)
+        //     })
+        //     .catch(error => console.log(error));
+        // }
         if (username) {
-            axios.get(API_URL + '/users/checkFav/' + jobId)
+            axios.post(API_URL + '/users/checkFav/', {jobId: jobId, username: username})
             .then(response => {
-                if(response.data === "liked") setLiked(true);
+                if (response.data === "liked") setLiked(true);
                 else setLiked(false)
             })
             .catch(error => console.log(error));
@@ -57,11 +64,11 @@ export default function JobDetailPage() {
     const addOrDeleteFav = () => {
         if(username) {
             if(!liked){
-                axios.post(API_URL + '/favorites/addFavorite', {fav: jobDetail})
+                axios.post(API_URL + '/favorites/addFavorite', {fav: jobDetail, username: username})
                     .then(() => setLiked(true))
                     .catch(error => console.log(error))  
             } else {
-                axios.post(API_URL + '/favorites/deleteFavorite', {fav: jobDetail})
+                axios.post(API_URL + '/favorites/deleteFavorite', {fav: jobDetail, username: username})
                     .then(() => setLiked(false))
                     .catch(error => console.log(error))
             }

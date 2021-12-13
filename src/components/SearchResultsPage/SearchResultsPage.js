@@ -14,6 +14,7 @@ export default function SearchResultsPage() {
         if (jobKey) {
             axios.get(API_URL + '/jobsearch/searchJobs/' + jobKey)
             .then(response => {
+                console.log("aaa")
                 console.log(response.data)
                 setSearchResults(response.data)
             })
