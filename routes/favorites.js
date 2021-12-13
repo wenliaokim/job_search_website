@@ -25,6 +25,11 @@ router.post('/addFavorite', Middleware.IsLoggedIn, function(req, res) {
 router.post('/deleteFavorite', Middleware.IsLoggedIn, function(req, res) {
     const username = req.username;
     const {fav} = req.body;
+
+    if(fav.username !== username) {
+        return res.status(400).send("The username does not match.")
+    }
+    
     return UserAccessor.findUserByUsername(username)
         .then( (favResponse) => {
             const index = favResponse.favorites.indexOf(fav._id);

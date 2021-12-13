@@ -44,7 +44,7 @@ router.post("/login", function(req, res) {
         })
 })
 
-router.get("/checkFav/:id", function(req, res) {
+router.get("/checkFav/:id", Middleware.IsLoggedIn, function(req, res) {
     const id = req.params.id;
     const username = req.session.username;
 

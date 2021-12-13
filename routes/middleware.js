@@ -1,11 +1,3 @@
-module.exports.whoisLoggedIn = (req, res, next) => {
-    const username = req.session.username;
-    if (username) {
-        req.username = username;
-        next();
-    }
-}
-
 module.exports.IsLoggedIn = (req, res, next) => {
     const username = req.session.username;
     if(!username) {
