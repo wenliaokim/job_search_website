@@ -5,9 +5,8 @@ const UserAccessor = require('./models/User.Model');
 const Middleware = require('./middleware.js');
 
 // homepage search bar api 
-router.post('/searchJobs', function(req, res) {
-    const {title} = req.body;
-
+router.get('/searchJobs/:jobKey', function(req, res) {
+    const title = req.params.jobKey;
     return JobAccessor.findJobByTitle(title)
       .then(jobResponse => res.status(200).send(jobResponse))
       .catch(error => res.status(400).send(error))

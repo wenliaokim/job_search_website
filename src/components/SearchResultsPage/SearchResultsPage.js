@@ -11,7 +11,7 @@ export default function SearchResultsPage() {
 
     useEffect(() => {
         if (jobKey) {
-            axios.post('/jobsearch/searchJobs', {title: jobKey})
+            axios.get('/jobsearch/searchJobs' + jobKey)
             .then(response => setSearchResults(response.data))
             .catch(error => console.log(error));
         }
