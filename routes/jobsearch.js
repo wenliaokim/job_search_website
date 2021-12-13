@@ -24,29 +24,40 @@ router.get('/searchJobs/JobDetail/:id', function(req, res) {
 })
 
 // job edit 
-router.put('/searchJobs/JobDetail/:id', function(req, res) {
-    //const username = req.session.username;
+router.put('/searchJobs/JobDetail/:id', Middleware.IsLoggedIn, function(req, res) {
+    const username = req.session.username;
     const id = req.params.id;
-    return JobAccessor.findJobByIdAndUpdate(id, {...req.body})
-        .then((jobResponse) => {
-            //if(jobResponse.username === username) {
-            res.status(200).send(jobResponse)
-
-              //  res.status(404).send("You are not authorized to edit this job!");
-        }) 
+    return JobAccessor.findJobById(id)
+        .then(response => {
+                if(response.username !== username) 
+                    return res.status(400).send("You can't delete other's job.")
+        })
+        .then(()=> {
+            JobAccessor.findJobByIdAndUpdate(id, {...req.body})
+            .then((response) => res.status(200).send(response))
+            .catch(error => res.status(400).send(error))
+        })
+        
         .catch(error => res.status(400).send(error))
 })
 
-router.delete('/searchJobs/JobDetail/:id', function(req, res) {
+router.delete('/searchJobs/JobDetail/:id', Middleware.IsLoggedIn, function(req, res) {
     const username = req.session.username;
     const id = req.params.id;
-    return JobAccessor.findJobByIdAndDelete(id)
-        .then(jobResponse => res.status(200).send("Successfully deleted"))
+    return JobAccessor.findJobById(id)
+        .then(response => {
+            if(response.username !== username) 
+                return res.status(400).send("You can't delete other's job.")
+        })
+        .then(() => {
+            JobAccessor.findJobByIdAndDelete(id)
+            .then((response) => res.status(200).send("Successfully deleted"))
+        })
         .catch(error => res.status(400).send(error))
 })
 
 // create job 
-router.post("/createJob", function(req, res) {
+router.post("/createJob", Middleware.IsLoggedIn, function(req, res) {
     // const username = req.session.username;
     const { title, companyName, location, jobDescription, employerEmail, website } = req.body;
     
