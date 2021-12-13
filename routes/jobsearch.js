@@ -71,4 +71,4 @@ router.post("/createJob", Middleware.IsLoggedIn, function(req, res) {
 })
 
 
-module.exports = router; 
+module.exports = router;
