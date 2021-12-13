@@ -11,10 +11,8 @@ export default function FavoritePage() {
 
     useEffect(() => {
         if (username) {
-            axios.post(API_URL + '/favorites', {username: username})
-            .then(response => {
-                setFavResults(response.data)
-            })
+            axios.post(API_URL + '/favorites', { username: username })
+            .then(response => {setFavResults(response.data)})
             .catch(error => console.log(error));
         }
     }, []);
