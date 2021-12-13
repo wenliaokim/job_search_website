@@ -10,7 +10,6 @@ const MongoStore = require('connect-mongo');
 
 const PORT = process.env.PORT || 8000;
 
-
 const mongoString = 'mongodb+srv://jingyi:q1w2e3r4t5@webdev.voyib.mongodb.net/jobsearch?retryWrites=true&w=majority';
 mongoose.connect(mongoString, { useNewUrlParser: true })
 const mongoDB = mongoose.connection;
