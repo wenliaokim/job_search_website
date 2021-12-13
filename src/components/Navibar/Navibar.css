@@ -37,6 +37,10 @@
 }
 
 @media(max-width: 700px) {
+    .Navibar {
+        font-size: 0.8em;
+    }
+
     .MobileButton {
         display: flex;
         justify-content: flex-end;

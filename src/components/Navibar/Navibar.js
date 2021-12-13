@@ -42,7 +42,7 @@ export default function Navibar() {
             {!username ?
             <div className={ showMobileNavBar ? "Buttons active" : "Buttons"}>
                 <Link to="/"><button onClick={() => closeMobileButtion()}>Home</button></Link>
-                <Link to="/signin"><button onClick={() => closeMobileButtion()}>Sign In</button></Link>
+                <Link to="/signin"><button onClick={() => closeMobileButtion()}>Login</button></Link>
                 <Link to="/register"><button onClick={() => closeMobileButtion()}>Register</button></Link>
             </div> 
             :
@@ -53,7 +53,7 @@ export default function Navibar() {
                     onClick={() => {
                         signOut();
                         closeMobileButtion();
-                    }}>Sign Out
+                    }}>Logout
                 </button>
                 <Link to="/createjob"><button onClick={() => closeMobileButtion()}>Create Job</button></Link>
                 <button className="UserNameButton" onClick={() => closeMobileButtion()}>
