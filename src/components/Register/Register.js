@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
+import { API_URL } from "../../constant";
 
 
 export default function Register() {
@@ -19,7 +20,7 @@ export default function Register() {
         else if (passwordRepetition !== userInfo.password) 
             window.alert("not input same password");
         else {
-            axios.post('/users/createUser', userInfo)
+            axios.post(API_URL + '/users/createUser', userInfo)
             .then(response => console.log(response))
             .catch(error => {
                 console.log(error);

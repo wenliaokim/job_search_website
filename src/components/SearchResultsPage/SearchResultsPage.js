@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import JobPage from "../JobPage/JobPage";
 import "./SearchResultsPage.css";
+import { API_URL } from "../../constant";
 
 export default function SearchResultsPage() {
     let params = useParams();
@@ -11,7 +12,7 @@ export default function SearchResultsPage() {
 
     useEffect(() => {
         if (jobKey) {
-            axios.get('https://job5610server.herokuapp.com/jobsearch/searchJobs/' + jobKey)
+            axios.get(API_URL + 'jobsearch/searchJobs/' + jobKey)
             .then(response => {
                 console.log(response.data)
                 setSearchResults(response.data)

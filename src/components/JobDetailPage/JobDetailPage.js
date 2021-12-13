@@ -8,6 +8,7 @@ import { AiOutlineMail, AiOutlineGlobal } from "react-icons/ai";
 import { BsCalendar2Date } from "react-icons/bs";
 import "./JobDetailPage.css";
 import * as Cookies from "js-cookie";
+import { API_URL } from "../../constant";
 
 export default function JobDetailPage() {
     const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
@@ -35,7 +36,7 @@ export default function JobDetailPage() {
 
     useEffect(() => {
         if (jobId) {
-            axios.get('/jobsearch/searchJobs/JobDetail/' + jobId)
+            axios.get(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId)
             .then(response => setJobDetail(response.data.jobResponse))
             .catch(error => {
                 console.log(error);
@@ -44,7 +45,7 @@ export default function JobDetailPage() {
         } 
 
         if (username) {
-            axios.get('/users/checkFav/' + jobId)
+            axios.get(API_URL + '/users/checkFav/' + jobId)
             .then(response => {
                 if(response.data === "liked") setLiked(true);
                 else setLiked(false)
@@ -56,11 +57,11 @@ export default function JobDetailPage() {
     const addOrDeleteFav = () => {
         if(username) {
             if(!liked){
-                axios.post('/favorites/addFavorite', {fav: jobDetail})
+                axios.post(API_URL + '/favorites/addFavorite', {fav: jobDetail})
                     .then(() => setLiked(true))
                     .catch(error => console.log(error))  
             } else {
-                axios.post('/favorites/deleteFavorite', {fav: jobDetail})
+                axios.post(API_URL + '/favorites/deleteFavorite', {fav: jobDetail})
                     .then(() => setLiked(false))
                     .catch(error => console.log(error))
             }
@@ -71,9 +72,9 @@ export default function JobDetailPage() {
     }
 
     const deleteJob = () => {
-        axios.delete('/jobsearch/searchJobs/JobDetail/' + jobId)
+        axios.delete(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId)
             .then(() => {
-                axios.post('/favorites/deleteFavorite', { fav: jobDetail })
+                axios.post(API_URL + '/favorites/deleteFavorite', { fav: jobDetail })
                 history.push('/');
             })
             .catch(error => console.log(error));

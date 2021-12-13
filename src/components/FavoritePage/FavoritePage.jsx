@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import JobPage from "../JobPage/JobPage";
 import * as Cookies from "js-cookie";
+import { API_URL } from "../../constant";
 
 export default function FavoritePage() {
     let username = Cookies.get("username");
@@ -10,7 +11,7 @@ export default function FavoritePage() {
 
     useEffect(() => {
         if (username) {
-            axios.get('/favorites')
+            axios.get(API_URL + '/favorites')
             .then(response => {
                 setFavResults(response.data)
             })

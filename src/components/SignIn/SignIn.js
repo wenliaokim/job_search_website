@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import * as Cookies from "js-cookie";
 import './SignIn.css';
+import { API_URL } from "../../constant";
 
 export default function SignIn() {
     const [userInput, setUserInput] = useState({username:'', password:''});
@@ -12,7 +13,7 @@ export default function SignIn() {
     const history = useHistory();
 
     const onSubmit = () => {
-        axios.post('/users/login', userInput)
+        axios.post(API_URL + '/users/login', userInput)
         .then(response => {
             Cookies.set("username", response.data.username);
             history.goBack();

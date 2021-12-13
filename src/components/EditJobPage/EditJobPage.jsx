@@ -5,6 +5,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import "./EditJobPage.css";
 import { useParams, useHistory, Redirect } from "react-router-dom";
 import * as Cookies from "js-cookie";
+import { API_URL } from '../../constant';
 
 
 export default function EditJobPage() {
@@ -31,7 +32,7 @@ export default function EditJobPage() {
 
     useEffect(() => {
         if (jobId) {
-            axios.get('/jobsearch/searchJobs/JobDetail/' + jobId)
+            axios.get(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId)
             .then(response => {
                 setJobData(response.data.jobResponse);
             })
@@ -78,7 +79,7 @@ export default function EditJobPage() {
             axios.post("https://api.cloudinary.com/v1_1/dn5oslw1q/image/upload", formData)
                 .then((response) => {
                     if (!errorMessage) {
-                        axios.put(`/jobsearch/searchJobs/JobDetail/${jobId}`, 
+                        axios.put(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId, 
                             {...jobData, iconUrl: response.data.url, username: Cookies.get("username")}
                         )
                         history.goBack();
@@ -86,7 +87,9 @@ export default function EditJobPage() {
                 })
                 .catch((error) => {console.log(error)});
         } else {
-            axios.put(`/jobsearch/searchJobs/JobDetail/${jobId}`, {...jobData, username: Cookies.get("username")})
+            axios.put(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId, 
+                {...jobData, username: Cookies.get("username")}
+            )
             .then(() => history.goBack())
             .catch(error => console.log(error));
         }

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import './JobPage.css';
+import { API_URL } from "../../constant";
 
 export default function JobPage({ job, jobId }) {
 
@@ -18,7 +19,7 @@ export default function JobPage({ job, jobId }) {
     useEffect(() => {
         if (job) {setJobDetail(job)}
         if (jobId) {
-            axios.get('/jobsearch/searchJobs/JobDetail/' + jobId)
+            axios.get(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId)
             .then(response => setJobDetail(response.data.jobResponse))
             .catch(error => console.log(error));
         }
