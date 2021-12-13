@@ -49,7 +49,7 @@ export default function CreateJobPage() {
         if (!jobData.title.trim()) errorMessage = "Invalid title input";
         else if (!jobData.companyName.trim()) errorMessage = "Invalid company input";
         else if (!jobData.location.trim()) errorMessage = "Invalid location input";
-        else if (!JSON.parse(jobData.jobDescription).blocks[0].text) errorMessage = "Invalid location input";
+        else if (!JSON.parse(jobData.jobDescription).blocks[0].text) errorMessage = "Invalid job description input";
         else if (!jobData.employerEmail.trim()) errorMessage = "Invalid email input";
 
         if (errorMessage) {
