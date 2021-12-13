@@ -13,7 +13,7 @@ export default function SearchResultsPage() {
         if (jobKey) {
             axios.get('/jobsearch/searchJobs/' + jobKey)
             .then(response => {
-                console.log(response)
+                console.log(response.data)
                 setSearchResults(response.data)
             })
             .catch(error => console.log(error));
