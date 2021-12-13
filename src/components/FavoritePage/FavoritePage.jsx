@@ -1,9 +1,9 @@
-import { Redirect } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import axios from 'axios';
-import JobPage from "../JobPage/JobPage";
 import * as Cookies from "js-cookie";
 import { API_URL } from "../../constant";
+import JobPage from "../JobPage/JobPage";
 
 export default function FavoritePage() {
     let username = Cookies.get("username");

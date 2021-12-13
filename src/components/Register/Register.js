@@ -1,8 +1,7 @@
-import { Link, useHistory } from "react-router-dom";
 import { useState } from 'react';
+import { Link, useHistory } from "react-router-dom";
 import axios from 'axios';
 import { API_URL } from "../../constant";
-
 
 export default function Register() {
     const [userInfo, setUserInfo] = useState({
@@ -23,10 +22,7 @@ export default function Register() {
             window.alert("not input same password");
         else {
             axios.post(API_URL + '/users/createUser', userInfo)
-            .then(response => {
-                console.log(response);
-                history.goBack();
-            })
+            .then(() => {history.goBack()})
             .catch(error => {
                 console.log(error);
                 window.alert("username already be used");

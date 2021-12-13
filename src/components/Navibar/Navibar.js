@@ -1,11 +1,11 @@
-import './Navibar.css';
-import { Link } from "react-router-dom";
-import * as Cookies from "js-cookie";
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import axios from 'axios';
 import { FaUserCircle } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCross } from "react-icons/im";
+import * as Cookies from "js-cookie";
+import './Navibar.css';
 
 export default function Navibar() {
     const [username, setUserName] = useState(Cookies.get("username"));
@@ -39,7 +39,7 @@ export default function Navibar() {
             <div className="MobileButton" onClick={() => controllMobileButtion()} style={{background: background}}>
                 {showMobileNavBar ? <ImCross /> : <GiHamburgerMenu />}
             </div>
-            { !username ?
+            {!username ?
             <div className={ showMobileNavBar ? "Buttons active" : "Buttons"}>
                 <Link to="/"><button onClick={() => closeMobileButtion()}>Home</button></Link>
                 <Link to="/signin"><button onClick={() => closeMobileButtion()}>Sign In</button></Link>
@@ -56,8 +56,8 @@ export default function Navibar() {
                     }}>Sign Out
                 </button>
                 <Link to="/createjob"><button onClick={() => closeMobileButtion()}>Create Job</button></Link>
-                <button className="UserNameButton" onClick={() => closeMobileButtion()}><FaUserCircle className="UserIcon"/> 
-                    {username}
+                <button className="UserNameButton" onClick={() => closeMobileButtion()}>
+                    <FaUserCircle className="UserIcon"/> {username}
                 </button>
             </div>  
             }

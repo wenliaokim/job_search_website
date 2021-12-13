@@ -3,11 +3,14 @@ import { useHistory, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import "./CreateJobPage.css";
 import * as Cookies from "js-cookie";
 import { API_URL } from '../../constant';
+import "./CreateJobPage.css";
 
-const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+const content = {
+    "entityMap":{},
+    "blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]
+};
 const noImageUrl = "https://res.cloudinary.com/dn5oslw1q/image/upload/v1639337656/2048px-No_image_available.svg_w9kbj7.png";
 
 export default function CreateJobPage() {
@@ -23,10 +26,10 @@ export default function CreateJobPage() {
     });
 
     const history = useHistory();
+    let username = Cookies.get("username");
 
     const [editorState, seteditorState] = useState(() => EditorState.createEmpty());
     const [selectedFile, setSelectedFile] = useState(null);
-
 
     const onTitleChange = (event) => {setJobData({...jobData, title: event.target.value})};
     const onCompanyChange = (event) => {setJobData({...jobData, companyName: event.target.value})};
@@ -62,13 +65,13 @@ export default function CreateJobPage() {
             axios.post("https://api.cloudinary.com/v1_1/dn5oslw1q/image/upload", formData)
                 .then((response) => {
                     if (!errorMessage) {
-                        axios.post(API_URL + '/jobsearch/createJob', {...jobData, iconUrl: response.data.url, username: Cookies.get("username")})
+                        axios.post(API_URL + '/jobsearch/createJob', {...jobData, iconUrl: response.data.url, username: username})
                         .then((response) => history.push('/jobDetail/' + response.data._id))
                     }
                 })
                 .catch((error) => {console.log(error)});
         } else {
-            axios.post(API_URL + '/jobsearch/createJob', {...jobData, iconUrl: noImageUrl, username: Cookies.get("username")})
+            axios.post(API_URL + '/jobsearch/createJob', {...jobData, iconUrl: noImageUrl, username: username})
             .then((response) => history.push('/jobDetail/' + response.data._id))
             .catch(error => console.log(error));
         }
@@ -76,7 +79,7 @@ export default function CreateJobPage() {
 
     return (
         <div>
-            { !Cookies.get("username") ? <Redirect to="/" /> 
+            { !username ? <Redirect to="/" /> 
             :
             <div className="ResultBackground">
                 <div className="Container">

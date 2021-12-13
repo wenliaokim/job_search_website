@@ -1,17 +1,21 @@
-import { IoBusinessSharp } from "react-icons/io5";
-import { GoLocation } from "react-icons/go";
 import { useState, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
 import { AiOutlineMail, AiOutlineGlobal } from "react-icons/ai";
 import { BsCalendar2Date } from "react-icons/bs";
-import "./JobDetailPage.css";
+import { IoBusinessSharp } from "react-icons/io5";
+import { GoLocation } from "react-icons/go";
 import * as Cookies from "js-cookie";
 import { API_URL } from "../../constant";
+import "./JobDetailPage.css";
 
 export default function JobDetailPage() {
-    const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+    // for rich text editor
+    const content = {
+        "entityMap":{},
+        "blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]
+    };
 
     let params = useParams();
     let jobId = params.id;
@@ -30,9 +34,7 @@ export default function JobDetailPage() {
         website: '',
         postingDate: ''
     });
-
     const [liked, setLiked] = useState(false);
-    const [jobStatus, setJobStatus] = useState("Not started");
 
     useEffect(() => {
         if (jobId) {
@@ -43,14 +45,6 @@ export default function JobDetailPage() {
                 history.push('/');
             });
         } 
-        // if (username) {
-        //     axios.get(API_URL + '/users/checkFav/' + jobId)
-        //     .then(response => {
-        //         if (response.data === "liked") setLiked(true);
-        //         else setLiked(false)
-        //     })
-        //     .catch(error => console.log(error));
-        // }
         if (username) {
             axios.post(API_URL + '/users/checkFav/', {jobId: jobId, username: username})
             .then(response => {

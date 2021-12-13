@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from 'axios';
+import { API_URL } from "../../constant";
 import JobPage from "../JobPage/JobPage";
 import "./SearchResultsPage.css";
-import { API_URL } from "../../constant";
 
 export default function SearchResultsPage() {
     let params = useParams();
@@ -13,11 +13,7 @@ export default function SearchResultsPage() {
     useEffect(() => {
         if (jobKey) {
             axios.get(API_URL + '/jobsearch/searchJobs/' + jobKey)
-            .then(response => {
-                console.log("aaa")
-                console.log(response.data)
-                setSearchResults(response.data)
-            })
+            .then(response => {setSearchResults(response.data)})
             .catch(error => console.log(error));
         }
     }, []);

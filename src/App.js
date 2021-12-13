@@ -2,13 +2,13 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import Homepage from './components/Homepage/Homepage';
 import SignIn from "./components/SignIn/SignIn";
 import Navibar from './components/Navibar/Navibar';
-import './App.css';
 import Register from "./components/Register/Register";
 import SearchResultsPage from "./components/SearchResultsPage/SearchResultsPage";
 import JobDetailPage from "./components/JobDetailPage/JobDetailPage";
 import CreateJobPage from "./components/CreateJobPage/CreateJobPage";
 import EditJobPage from "./components/EditJobPage/EditJobPage";
 import FavoritePage from "./components/FavoritePage/FavoritePage";
+import './App.css';
 
 function App() {
     return (

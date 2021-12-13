@@ -9,10 +9,14 @@ import { API_URL } from '../../constant';
 
 
 export default function EditJobPage() {
-    const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
+    const content = {
+        "entityMap":{},
+        "blocks":[{"key":"637gr","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]
+    };
 
     let params = useParams();
     let jobId = params.id;
+    let username = Cookies.get("username");
     const history = useHistory();
 
     const [editorState, seteditorState] = useState(() => EditorState.createEmpty());
@@ -27,7 +31,6 @@ export default function EditJobPage() {
         employerEmail: '',
         website: '' 
     });
-    
     const [selectedFile, setSelectedFile] = useState(null);
 
     useEffect(() => {
@@ -35,6 +38,9 @@ export default function EditJobPage() {
             axios.get(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId)
             .then(response => {
                 setJobData(response.data.jobResponse);
+                if (response.data.jobResponse.username !== username) {
+                    history.push('/');
+                }
             })
             .catch(error => console.log(error));
         }
@@ -43,7 +49,6 @@ export default function EditJobPage() {
     useEffect(() => {
         seteditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(jobData.jobDescription))));
     }, [jobData._id]);
-
 
     const onTitleChange = (event) => {setJobData({...jobData, title: event.target.value})};
     const onCompanyChange = (event) => {setJobData({...jobData, companyName: event.target.value})};
@@ -59,7 +64,6 @@ export default function EditJobPage() {
     const onSelectFile = (event) => {setSelectedFile(event.target.files[0])}
 
     const onEditJob = () => {
-        console.log(jobData);
         let errorMessage = "";
         if (!jobData.title.trim()) errorMessage = "Invalid title input";
         else if (!jobData.companyName.trim()) errorMessage = "Invalid company input";
@@ -80,7 +84,7 @@ export default function EditJobPage() {
                 .then((response) => {
                     if (!errorMessage) {
                         axios.put(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId, 
-                            {...jobData, iconUrl: response.data.url, username: Cookies.get("username")}
+                            {...jobData, iconUrl: response.data.url, username: username}
                         )
                         history.goBack();
                     }
@@ -88,7 +92,7 @@ export default function EditJobPage() {
                 .catch((error) => {console.log(error)});
         } else {
             axios.put(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId, 
-                {...jobData, username: Cookies.get("username")}
+                {...jobData, username: username}
                 )
             .then(() => history.goBack())
             .catch(error => console.log(error));
@@ -97,7 +101,7 @@ export default function EditJobPage() {
 
     return (
         <div>
-            {!Cookies.get("username") ? <Redirect to="/" />
+            {!username ? <Redirect to="/" />
             :
             <div className="ResultBackground">
                 <div className="Container">

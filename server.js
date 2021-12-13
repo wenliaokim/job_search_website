@@ -2,11 +2,12 @@ const express = require('express');
 const jobsearch = require('./routes/jobsearch.js');
 const users = require('./routes/users.js');
 const favorites = require('./routes/favorites.js');
-// const cors = require('cors');
+const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');    
+const MongoStore = require('connect-mongo');   
+const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 8000;
 
@@ -16,7 +17,21 @@ const mongoDB = mongoose.connection;
 mongoDB.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
 const app = express();
-// app.use(cors());
+app.use(cookieParser());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET,PUT,POST,DELETE,UPDATE,OPTIONS"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept"
+    );
+    next();
+})
+app.use(cors());
 
 app.use(session({secret: "my demo secret",
     store: MongoStore.create({ mongoUrl: mongoString }),
