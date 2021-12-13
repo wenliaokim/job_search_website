@@ -89,7 +89,7 @@ export default function EditJobPage() {
         } else {
             axios.put(API_URL + '/jobsearch/searchJobs/JobDetail/' + jobId, 
                 {...jobData, username: Cookies.get("username")}
-            )
+                )
             .then(() => history.goBack())
             .catch(error => console.log(error));
         }
