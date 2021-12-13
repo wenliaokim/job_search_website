@@ -73,6 +73,10 @@
     width: 100px;
 }
 
+.form-select {
+    max-width: 200px;
+}
+
 @media(max-width: 540px) {
     .firstPart {
         display: flex;
