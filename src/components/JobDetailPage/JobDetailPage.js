@@ -111,14 +111,6 @@ export default function JobDetailPage() {
                             onClick={addOrDeleteFav}>
                             {liked ? "unlike" : "like"}
                         </button>
-                        <select className="form-select mt-3" aria-label="job-status" onChange={(event) => console.log(event.target.value)}>
-                            <option value="Not started">Not started</option>
-                            <option value="Applied">Applied</option>
-                            <option value="Interview Scheduled">Interview Scheduled</option>
-                            <option value="Accepted">Accepted</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                        <button className="btn btn-outline-secondary mt-3">change status</button>
                     </div>
                     <div className="DescriptionTitle"><b>Description: </b></div>
                     <div className="card-text DescriptionDisplay" 
