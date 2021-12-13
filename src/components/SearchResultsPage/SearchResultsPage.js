@@ -12,7 +12,10 @@ export default function SearchResultsPage() {
     useEffect(() => {
         if (jobKey) {
             axios.get('/jobsearch/searchJobs' + jobKey)
-            .then(response => setSearchResults(response.data))
+            .then(response => {
+                console.log(response)
+                setSearchResults(response.data)
+            })
             .catch(error => console.log(error));
         }
     }, []);

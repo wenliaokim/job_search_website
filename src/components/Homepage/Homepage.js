@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 
 export default function Homepage() {
-    const [searchLink, setSearchLink] = useState("/searchJobs/");
-    const onSearchLinkChange = (event) => setSearchLink("/searchJobs/" + event.target.value);
+    const [searchLink, setSearchLink] = useState("/search/");
+    const onSearchLinkChange = (event) => setSearchLink("/search/" + event.target.value);
     
     return (
         <div className="Homepage">

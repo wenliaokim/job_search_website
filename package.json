@@ -1,6 +1,5 @@
 {
   "name": "wen_liao_and_jingyi_mao_project3",
-  "proxy": "http://localhost:8000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
