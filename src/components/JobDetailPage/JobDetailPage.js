@@ -79,7 +79,7 @@ export default function JobDetailPage() {
     }
 
     const deleteJob = () => {
-        axios.delete(API_URL + '/jobsearch/searchJobs/deleteJob/' + jobId)
+        axios.post(API_URL + '/jobsearch/searchJobs/deleteJob/' + jobId)
             .then(() => {
                 axios.post(API_URL + '/favorites/deleteFavorite', { fav: jobDetail })
                 history.push('/');
