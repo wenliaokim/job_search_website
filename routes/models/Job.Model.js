@@ -12,7 +12,7 @@ function getAllJobs() {
 }
 
 function findJobByTitle(title) {
-    return JobModel.find({title:{'$regex' : title + '.*', '$options' : 'i'}})
+    return JobModel.find({title:{'$regex' : '.*' + title + '.*', '$options' : 'i'}})
 }
 
 function findJobById(id) {
