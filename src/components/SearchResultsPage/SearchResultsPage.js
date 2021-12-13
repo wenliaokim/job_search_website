@@ -11,7 +11,7 @@ export default function SearchResultsPage() {
 
     useEffect(() => {
         if (jobKey) {
-            axios.get('/jobsearch/searchJobs' + jobKey)
+            axios.get('/jobsearch/searchJobs/' + jobKey)
             .then(response => {
                 console.log(response)
                 setSearchResults(response.data)
