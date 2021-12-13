@@ -15,6 +15,7 @@ const mongoDB = mongoose.connection;
 mongoDB.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
 
 const app = express();
+app.use(cors());
 
 app.use(session({secret: "my demo secret",
     store: MongoStore.create({ mongoUrl: mongoString }),
